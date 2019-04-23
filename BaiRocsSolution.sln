@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaiROcs", "BaiRocks\BaiROcs.csproj", "{5EFBF2F3-4904-4799-9753-6D20320E26AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependency", "Dependency", "{B730AA9F-089A-4BD4-98A0-629F2C05D6B8}"
+	ProjectSection(SolutionItems) = preProject
+		Dependency\DotBits.Configuration.dll = Dependency\DotBits.Configuration.dll
+		Dependency\LogApplication.dll = Dependency\LogApplication.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EFBF2F3-4904-4799-9753-6D20320E26AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFBF2F3-4904-4799-9753-6D20320E26AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFBF2F3-4904-4799-9753-6D20320E26AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFBF2F3-4904-4799-9753-6D20320E26AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2EED784-45A4-4E88-A405-DB2B5ED84355}
+	EndGlobalSection
+EndGlobal
