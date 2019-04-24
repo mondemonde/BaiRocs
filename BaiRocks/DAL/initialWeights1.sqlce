@@ -1,4 +1,4 @@
-﻿-- Script Date: 4/18/2019 5:14 PM  - ErikEJ.SqlCeScripting version 3.5.2.80
+﻿-- Script Date: 4/24/2019 11:45 AM  - ErikEJ.SqlCeScripting version 3.5.2.80
 SET IDENTITY_INSERT [WeightFactors] ON;
 GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
@@ -86,7 +86,7 @@ INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modi
 28,N'PriceTitle',N':',1,{ts '2019-04-17 08:49:42.213'},NULL);
 GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
-29,N'AmountTenderTiTle',N'Tender',3,{ts '2019-04-17 08:51:26.527'},NULL);
+29,N'AmountTenderTiTle',N'Tender',4,{ts '2019-04-17 08:51:26.527'},NULL);
 GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
 30,N'AmoundTender',N'.00',2,{ts '2019-04-17 08:52:49.837'},NULL);
@@ -124,7 +124,49 @@ GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
 41,N'Detail',N':',-1,{ts '2019-04-18 08:56:59.737'},NULL);
 GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+42,N'Address',N'Quezon City',6,{ts '2019-04-21 22:58:42.723'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+43,N'Address',N'ave.',6,{ts '2019-04-21 22:59:04.003'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+44,N'VendorName',N'Corporation',5,{ts '2019-04-21 23:03:48.913'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+45,N'VendorName',N'Corp,',4,{ts '2019-04-21 23:04:05.517'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+46,N'VendorName',N'Inc.',4,{ts '2019-04-21 23:04:18.307'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+47,N'VendorName',N'Incorporation',5,{ts '2019-04-21 23:04:36.373'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+48,N'VendorName',N'LTD',3,{ts '2019-04-21 23:05:06.323'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+49,N'PriceTitle',N'Cash',3,{ts '2019-04-21 23:39:49.090'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+50,N'AmountTenderTiTle',N'Cash',2,{ts '2019-04-22 00:37:41.257'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+51,N'AmountTenderTiTle',N':',2,{ts '2019-04-22 00:37:47.410'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+52,N'AmountTenderTiTle',N'Tendered',4,{ts '2019-04-22 00:38:03.203'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+53,N'VendorName',N'Service Center',5,{ts '2019-04-22 01:45:48.900'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+54,N'VendorName',N'Center',1,{ts '2019-04-22 01:46:15.610'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+55,N'VendorName',N'Services',1,{ts '2019-04-22 01:46:31.293'},NULL);
+GO
 SET IDENTITY_INSERT [WeightFactors] OFF;
 GO
-ALTER TABLE [WeightFactors] ALTER COLUMN [Id] IDENTITY (42,1);
+ALTER TABLE [WeightFactors] ALTER COLUMN [Id] IDENTITY (56,1);
 GO

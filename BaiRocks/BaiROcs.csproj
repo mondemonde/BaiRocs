@@ -194,7 +194,8 @@
     <None Include="DAL\DataSet1.xss">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
-    <None Include="DAL\initialWeights.sqlce" />
+    <None Include="DAL\initialWeights1.sqlce" />
+    <None Include="DAL\initialWeights2.sqlce" />
     <None Include="Properties\DataSources\BaiRocs.Models.Receipt.datasource" />
     <None Include="Resources\DeleteTable_16x.png" />
     <EmbeddedResource Include="MainFrm.resx">
