@@ -176,6 +176,8 @@ namespace BaiRocs
 
             //var files = Directory.GetFiles(Global.CurrentFolder.FullName);
             var files = Global.CurrentFolder.GetFiles();
+
+
             bindingSource1.DataSource = files.ToList();
             dgFiles.DataSource = bindingSource1;
 
@@ -492,7 +494,8 @@ namespace BaiRocs
             var qParts = Global.OcrLines.Where(o => o.ElectedAs == ReceiptParts.DateTitle.ToString()).ToList();
             if (qParts.Count == 0)
             {
-                qParts = Global.OcrLines.OrderBy(o => o.WeightedAsDateTitle).ToList();
+                qParts = Global.OcrLines.Where(x=>string.IsNullOrEmpty(x.ElectedAs))
+                    .OrderBy(o => o.WeightedAsDateTitle).ToList();
                 var ocr = qParts.Last();
                 ocr.ElectedAs = ReceiptParts.DateTitle.ToString();
             }
@@ -500,7 +503,8 @@ namespace BaiRocs
             qParts = Global.OcrLines.Where(o => o.ElectedAs == ReceiptParts.VendorName.ToString()).ToList();
             if (qParts.Count == 0)
             {
-                qParts = Global.OcrLines.OrderBy(o => o.WeightedAsVendorName).ToList();
+                qParts = Global.OcrLines.Where(x => string.IsNullOrEmpty(x.ElectedAs))
+                    .OrderBy(o => o.WeightedAsVendorName).ToList();
                 var ocr = qParts.Last();
                 ocr.ElectedAs = ReceiptParts.VendorName.ToString();
             }
@@ -508,7 +512,8 @@ namespace BaiRocs
             qParts = Global.OcrLines.Where(o => o.ElectedAs == ReceiptParts.VendorTINTitle.ToString()).ToList();
             if (qParts.Count == 0)
             {
-                qParts = Global.OcrLines.OrderBy(o => o.WeightedAsVendorTINTitle).ToList();
+                qParts = Global.OcrLines.Where(x => string.IsNullOrEmpty(x.ElectedAs))
+                    .OrderBy(o => o.WeightedAsVendorTINTitle).ToList();
                 var ocr = qParts.Last();
                 ocr.ElectedAs = ReceiptParts.VendorTINTitle.ToString();
             }
@@ -516,7 +521,8 @@ namespace BaiRocs
             qParts = Global.OcrLines.Where(o => o.ElectedAs == ReceiptParts.PriceTitle.ToString()).ToList();
             if (qParts.Count == 0)
             {
-                qParts = Global.OcrLines.OrderBy(o => o.WeightedAsTotalTitle).ToList();
+                qParts = Global.OcrLines.Where(x => string.IsNullOrEmpty(x.ElectedAs))
+                    .OrderBy(o => o.WeightedAsTotalTitle).ToList();
                 var ocr = qParts.Last();
                 ocr.ElectedAs = ReceiptParts.PriceTitle.ToString();
             }
@@ -525,7 +531,8 @@ namespace BaiRocs
             qParts = Global.OcrLines.Where(o => o.ElectedAs == ReceiptParts.Address.ToString()).ToList();
             if (qParts.Count == 0)
             {
-                qParts = Global.OcrLines.OrderBy(o => o.WeightedAsAddress).ToList();
+                qParts = Global.OcrLines.Where(x => string.IsNullOrEmpty(x.ElectedAs))
+                    .OrderBy(o => o.WeightedAsAddress).ToList();
                 var ocr = qParts.Last();
                 ocr.ElectedAs = ReceiptParts.Address.ToString();
             }
@@ -736,6 +743,9 @@ namespace BaiRocs
                 this.bindingNavigatorCSV.BindingSource = bindingSourceCSV;
 
             }
+
+            //export to csv
+            //SaveDataGridViewToCSV
 
 
         }

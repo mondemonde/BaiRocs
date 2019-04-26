@@ -131,7 +131,11 @@ namespace BaiRocs.Policy
 
             if (ocrLine.LineNo < 3)
                 ocrLine.WeightedAsAddress += 3;
-        
+
+            if (ocrLine.LineNo == 1)
+                ocrLine.WeightedAsAddress += -3;
+
+
 
             if (ocrLine.PercentNumber < 25)
             {

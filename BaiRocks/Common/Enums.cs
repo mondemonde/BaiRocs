@@ -30,7 +30,8 @@ namespace BaiRocs.Common
         Searching,
         Scanning,
         Weighing,
-        Sigma
+        Sigma,
+        Error
     }
    
     public enum EnumCmd
