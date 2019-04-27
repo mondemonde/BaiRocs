@@ -202,8 +202,13 @@ namespace BaiRocs.WF
         public static string ProcessStatus { get => s_processStatus; set => s_processStatus = value; }
         public static List<BaiOcrLine> OcrLines { get; set; }
         public static Sigma CurrentSigma { get; set; }
-        public static DirectoryInfo CurrentFolder { get; set; }
+        public static DirectoryInfo CurrentUserFolder { get; set; }
         public static string CurrentUser { get; set; }
+
+        public static DirectoryInfo CurrentImageFolder { get; set; }
+        public static DirectoryInfo[] CurrentListImageFolder { get; set; }
+
+
         public static Receipt CurrentReciept { get; set; }
 
 

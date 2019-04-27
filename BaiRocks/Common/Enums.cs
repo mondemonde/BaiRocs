@@ -31,6 +31,7 @@ namespace BaiRocs.Common
         Scanning,
         Weighing,
         Sigma,
+        Election,
         Error
     }
    

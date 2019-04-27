@@ -31,10 +31,10 @@ namespace BaiRocs.Commands
                 //FileInfo[] files = dir.GetFiles().Take(10);
                 var motherDir = new DirectoryInfo(rootDir);
                 DirectoryInfo[] Folders = motherDir.GetDirectories("*",SearchOption.TopDirectoryOnly); //( Directory.getd(rootDir, "*.*", SearchOption.AllDirectories).Take(5);
-                Global.CurrentFolder = Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();           
-                Global.LogWarn("Global.CurrentFolder -->" +Global.CurrentFolder.Name);
+                Global.CurrentUserFolder = Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();           
+                Global.LogWarn("Global.CurrentFolder -->" +Global.CurrentUserFolder.Name);
                 //var files = Global.CurrentFolder.GetFiles( "*.*", SearchOption.AllDirectories);
-                var files = Directory.GetFiles(Global.CurrentFolder.FullName);
+                var files = Directory.GetFiles(Global.CurrentUserFolder.FullName);
 
                 context.SetValue(this.Result, files);
                 //Global.MainWindow.InvokeOnUiThread(

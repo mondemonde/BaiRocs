@@ -44,7 +44,7 @@ namespace BaiRocs
             backgroundWorker1.RunWorkerAsync();
             Thread.Sleep(1000);
 
-            chkDelImage.Checked =Convert.ToBoolean(Convert.ToInt32(Global.Config.GetValue("AutoDeleteImage")));
+            chkDelImage.Checked = Convert.ToBoolean(Convert.ToInt32(Global.Config.GetValue("AutoDeleteImage")));
 
             comboBoxDim.DataSource = MyReceiptMetaData.ListOfDimensions;
             MyReceiptMetaData.NatureOfTnx = new Dictionary<string, int> {
@@ -67,6 +67,7 @@ namespace BaiRocs
             cbDetailFactor.DisplayMember = "Key";
             cbDetailFactor.ValueMember = "Key";
 
+            Global.MakeScanIdle = chkIsScanBusy.Checked;
 
             SetStatus(ProcessStatus.Ready);
         }
@@ -156,6 +157,38 @@ namespace BaiRocs
             }
         }
 
+        public void SetCurrentUserFolder()
+        {
+            //SetStatus(ProcessStatus.Searching);
+            var rootDir = Global.Config.GetValue("RawImageFolder");
+            var dir = new DirectoryInfo(rootDir);
+            //FileInfo[] files = dir.GetFiles().Take(10);
+            var motherDir = new DirectoryInfo(rootDir);
+
+            var logList = motherDir.GetFiles("log.txt", SearchOption.AllDirectories).ToList();
+            logList = logList.OrderBy(f => f.CreationTime).ToList();
+            var currentLog = logList.FirstOrDefault();
+
+            if (currentLog != null)
+            {
+                DirectoryInfo[] Folders = motherDir.GetDirectories("*", SearchOption.TopDirectoryOnly); //( Directory.getd(rootDir, "*.*", SearchOption.AllDirectories).Take(5);
+                var userStart = currentLog.DirectoryName.ToLower();
+                var dirList = Folders.ToList().Where(f =>userStart.StartsWith(f.FullName.ToLower()) );
+                Global.CurrentUserFolder = dirList.FirstOrDefault();//Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();
+                Global.LogWarn("Global.CurrentFolder -->" + Global.CurrentUserFolder.Name);
+                Global.CurrentUser = Global.CurrentUserFolder.Name;
+            }
+            else
+            {
+                //TODO...
+                //nothing to convert- no log files
+
+            }
+
+
+
+        }
+
         private void chkIsScanBusy_CheckedChanged(object sender, EventArgs e)
         {
             Global.MakeScanIdle = chkIsScanBusy.Checked;
@@ -164,28 +197,161 @@ namespace BaiRocs
         private void btnSearch_Click(object sender, EventArgs e)
         {
             SetStatus(ProcessStatus.Searching);
+            //0. Delete empty folders...
             var rootDir = Global.Config.GetValue("RawImageFolder");
-            //var dir = new DirectoryInfo(rootDir);
-            //FileInfo[] files = dir.GetFiles().Take(10);
-            var motherDir = new DirectoryInfo(rootDir);
-            DirectoryInfo[] Folders = motherDir.GetDirectories("*", SearchOption.TopDirectoryOnly); //( Directory.getd(rootDir, "*.*", SearchOption.AllDirectories).Take(5);
-            Global.CurrentFolder = Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();
-            Global.LogWarn("Global.CurrentFolder -->" + Global.CurrentFolder.Name);
-            Global.CurrentUser = Global.CurrentFolder.Name;
+            var deleteFiles = Directory.GetFiles(rootDir, "done.txt", SearchOption.AllDirectories);
+            foreach(string delFile in deleteFiles)
+            {
+                try
+                {
+                    var del = Path.GetDirectoryName(delFile);
+                    Directory.Delete(del, true);
+                }
+                catch (Exception err)
+                {
+                    Global.LogError(err.Message);
+                }
+            }
+
+            //delete empty folders
+            var users = Directory.GetDirectories(rootDir, "*", SearchOption.TopDirectoryOnly);
+            foreach(string user in users)
+            {
+                var images = Directory.GetDirectories(user, "*", SearchOption.TopDirectoryOnly);
+                foreach (string imagedir in images)
+                {
+                    var fileImages = Directory.GetFiles(imagedir,"*.*",SearchOption.AllDirectories);
+                    if (fileImages.Count() == 0)
+                        Directory.Delete(imagedir,true);
+
+                }
+
+            }
+
+            //remove log.txt etc  in user folder
+            users = Directory.GetDirectories(rootDir, "*", SearchOption.TopDirectoryOnly);
+            foreach (string user in users)
+            {
+                var xtrafiles = Directory.GetFiles(user, "*.*", SearchOption.TopDirectoryOnly);
+                foreach(string f in xtrafiles)
+                {
+                    if(Path.GetFileName(f)!="receipt.csv")
+                    {
+                        File.Delete(f);
+                    }
+                }
+            }
 
 
-            //var files = Directory.GetFiles(Global.CurrentFolder.FullName);
-            var files = Global.CurrentFolder.GetFiles();
+
+            //1. //rgalvez folder Set CURRENT USER folder 
+            SetCurrentUserFolder();
+
+            //2 rgalvez/imagefolder
+            var rootImageFolder = Global.CurrentUserFolder;
+            Global.CurrentListImageFolder = rootImageFolder.GetDirectories();
+
+            //3. get log.txt list
+            var logList = rootImageFolder.GetFiles("log.txt", SearchOption.AllDirectories).ToList();
+            logList = logList.OrderBy(f => f.CreationTime).ToList();
+
+            var currentLog = logList.FirstOrDefault();
+            List<FileInfo> imageFiles = new List<FileInfo>();
+
+            if (logList.Count>0)
+            {
+                Global.CurrentImageFolder = currentLog.Directory;
+                
+
+                //4. final list of images in current folder
+                var filesAll = Global.CurrentImageFolder.GetFiles();
+                List<string> restrictions = new List<string>
+                {
+                    ".bmp",
+                    ".png",
+                    ".jpg"
+                };
+                foreach (var f in filesAll)
+                {
+                    var fname = f.FullName;
+                    var ext = Path.GetExtension(fname);
+                    if (!restrictions.Contains(ext.ToLower()))
+                    {
+                        var filename = Path.GetFileName(fname);
+                        if (filename != "log.txt" && filename != "receipt.csv")
+                        {
+                            File.Delete(fname);
+                            Global.LogError("File Deleted..." + fname);
+                            //bindingSource1.RemoveCurrent();
+                        }
+
+                    }
+                    else
+                    {
+                        imageFiles.Add(f);
+                    }
+
+                }
+            } 
+            else
+            {
+                Global.CurrentImageFolder = null;
+            }
+
+            //5 so what is the current image folder
 
 
-            bindingSource1.DataSource = files.ToList();
+            bindingSource1.DataSource = imageFiles.ToList();
             dgFiles.DataSource = bindingSource1;
+
+            SetStatus(ProcessStatus.Ready);
+
 
         }
 
         private void btnChekFile_Click(object sender, EventArgs e)
         {
+            WaitForReady();
             SetStatus(ProcessStatus.Scanning);
+
+            //if no more image file in the current folder...
+            if (bindingSource1.Current == null || bindingSource1.Count == 0)
+            {
+                bool isbusy = true;
+                while (isbusy == true)
+                {
+                    try
+                    {
+                        // Global.CurrentFolder.LastAccessTime = DateTime.Now;
+                        //var filename = Path.Combine(Global.CurrentUserFolder.FullName, "log.txt");
+                        //File.AppendAllText(filename, "checked: " + DateTime.Now.ToShortDateString()
+                        //    + " " + DateTime.Now.ToLongTimeString() + Environment.NewLine);
+
+                        if(Global.CurrentImageFolder!=null)
+                        {
+                            var filename2 = Path.Combine(Global.CurrentImageFolder.FullName, "done.txt");
+                            //make chnges to folder
+                            if (File.Exists(filename2))
+                                File.Delete(filename2);
+
+                            var stream = File.Create(filename2);
+                            stream.Close();
+                        }
+
+                      
+                        isbusy = false;
+                    }
+                    catch (Exception)
+                    {
+                        Thread.Sleep(1000);
+                    }
+                }
+
+                SetStatus(ProcessStatus.Ready);
+                return;
+            }
+
+
             FileInfo current = (FileInfo)bindingSource1.Current;
             List<string> restrictions = new List<string>
                 {
@@ -215,11 +381,13 @@ namespace BaiRocs
                 //Do OCR here..
 
             }
+
             SetStatus(ProcessStatus.Ready);
         }
 
         private void btnScan_Click(object sender, EventArgs e)
         {
+            WaitForReady();
             SetStatus(ProcessStatus.Scanning);
             FileInfo current = (FileInfo)bindingSource1.Current;
             //BaiRocService azureSvc = new BaiRocService();
@@ -239,6 +407,7 @@ namespace BaiRocs
                 ConsoleSpinner.Instance.Update();
                 //AsciiArt.Draw();
                 Task.Delay(100);
+                Application.DoEvents();
             }
 
             bindingSourceOCR.DataSource = Global.OcrLines;
@@ -269,6 +438,7 @@ namespace BaiRocs
 
         private void btnWeight_Click(object sender, EventArgs e)
         {
+            WaitForReady();
             SetStatus(ProcessStatus.Weighing);
             for (int i = 0; i < Global.OcrLines.Count; i++)
             {
@@ -297,6 +467,9 @@ namespace BaiRocs
 
         private void btnSigma_Click(object sender, EventArgs e)
         {
+            WaitForReady();
+            SetStatus(ProcessStatus.Sigma);
+
             Global.CurrentSigma = new Models.Sigma();
             foreach (var ocr in Global.OcrLines)
             {
@@ -319,11 +492,15 @@ namespace BaiRocs
             dgSigma.DataSource = bindingSourceSigma;
             dgSigma.Refresh();
 
-
+            SetStatus(ProcessStatus.Ready);
         }
 
         private void btnElect1_Click(object sender, EventArgs e)
         {
+            WaitForReady();
+            SetStatus(ProcessStatus.Election);
+
+
             var sigmas = Global.CurrentSigma.GetSigmasDesc();
 
             foreach (var s in sigmas)
@@ -339,6 +516,9 @@ namespace BaiRocs
             bindingNavigatorElect1.BindingSource = bindingSourceElect1;
             dgElection1.DataSource = bindingSourceElect1;
             dgElection1.Refresh();
+
+            SetStatus(ProcessStatus.Ready);
+
         }
 
         private void comboBoxDim_SelectedIndexChanged(object sender, EventArgs e)
@@ -446,7 +626,7 @@ namespace BaiRocs
 
                 for (int i = ocrTender.LineNo; i > 5; i--)
                 {
-                    if ((Global.OcrLines[i].Content.ToLower().Contains("total") 
+                    if ((Global.OcrLines[i].Content.ToLower().Contains("total")
                         || Global.OcrLines[i].Content.ToLower().Contains("price")) &&
                          !Global.OcrLines[i].Content.ToLower().Contains("sub"))
                     {
@@ -494,7 +674,7 @@ namespace BaiRocs
             var qParts = Global.OcrLines.Where(o => o.ElectedAs == ReceiptParts.DateTitle.ToString()).ToList();
             if (qParts.Count == 0)
             {
-                qParts = Global.OcrLines.Where(x=>string.IsNullOrEmpty(x.ElectedAs))
+                qParts = Global.OcrLines.Where(x => string.IsNullOrEmpty(x.ElectedAs))
                     .OrderBy(o => o.WeightedAsDateTitle).ToList();
                 var ocr = qParts.Last();
                 ocr.ElectedAs = ReceiptParts.DateTitle.ToString();
@@ -546,8 +726,13 @@ namespace BaiRocs
 
         private void btnCreateReceipt_Click(object sender, EventArgs e)
         {
+
+            WaitForReady();
+            SetStatus(ProcessStatus.Election);
+
+
             List<Receipt> table = new List<Receipt>();
-            string user = Global.CurrentFolder.Name;
+            string user = Global.CurrentUserFolder.Name;
             Global.CurrentReciept = new Receipt
             {
                 UserFolder = user
@@ -582,6 +767,7 @@ namespace BaiRocs
             dgReceipts.DataSource = receiptBindingSource;
             this.bindingNavigatorReceipts.BindingSource = receiptBindingSource;
 
+            SetStatus(ProcessStatus.Ready);
 
         }
 
@@ -721,21 +907,34 @@ namespace BaiRocs
 
         void SaveDataGridViewToCSV(string filename)
         {
-            // Choose whether to write header. Use EnableWithoutHeaderText instead to omit header.
-            dgCSV.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            // Select all the cells
-            dgCSV.SelectAll();
-            // Copy selected cells to DataObject
-            DataObject dataObject = dgCSV.GetClipboardContent();
-            // Get the text of the DataObject, and serialize it to a file
-            File.WriteAllText(filename, dataObject.GetText(TextDataFormat.CommaSeparatedValue));
+            try
+            {
+                if (File.Exists(filename))
+                    File.Delete(filename);
+
+                // Choose whether to write header. Use EnableWithoutHeaderText instead to omit header.
+                dgCSV.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+                // Select all the cells
+                dgCSV.SelectAll();
+                // Copy selected cells to DataObject
+                DataObject dataObject = dgCSV.GetClipboardContent();
+                // Get the text of the DataObject, and serialize it to a file
+                File.WriteAllText(filename, dataObject.GetText(TextDataFormat.CommaSeparatedValue));
+
+            }
+            catch (Exception ex)
+            {
+
+                Global.LogError(ex.Message);
+            }
+
         }
 
         private void btnExcel_Click(object sender, EventArgs e)
         {
             using (MyDBContext db = new MyDBContext())
             {
-                var q = db.TableReceipts.Where(r => r.UserFolder == Global.CurrentFolder.Name);
+                var q = db.TableReceipts.Where(r => r.UserFolder == Global.CurrentUserFolder.Name);
                 var list = q.OrderByDescending(r => r.Date).ToList();
 
                 this.bindingSourceCSV.DataSource = list;
@@ -745,9 +944,48 @@ namespace BaiRocs
             }
 
             //export to csv
-            //SaveDataGridViewToCSV
+            var folder = Global.CurrentUserFolder.FullName;
+            var file = "receipt.csv";
+            var path = Path.Combine(folder, file);
+            SaveDataGridViewToCSV(path);
 
 
+        }
+
+        private void btnAutoRun_Click(object sender, EventArgs e)
+        {
+            chkIsScanBusy.Checked = false;
+            var idle = Global.MakeScanIdle = chkIsScanBusy.Checked;
+
+            while (idle == false)
+            {
+                btnSearch_Click(sender, e);
+
+                btnChekFile_Click(sender, e);
+                btnScan_Click(sender, e);
+                btnWeight_Click(sender, e);
+                btnSigma_Click(sender, e);
+                btnElect1_Click(sender, e);
+                btn2ndElection_Click(sender, e);
+                btn3rdElection_Click(sender, e);
+                btnCreateReceipt_Click(sender, e);
+                btnDetails_Click(sender, e);
+                btnSave_Click(sender, e);
+                btnExcel_Click(sender, e);
+
+
+                Application.DoEvents();
+            }
+
+        }
+
+        void WaitForReady()
+        {
+            while (Global.ProcessStatus != ProcessStatus.Ready.ToString())                
+            {
+                Task.Delay(100);
+                Application.DoEvents();
+            }
         }
     }
 }
