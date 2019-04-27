@@ -157,7 +157,7 @@ namespace BaiRocs
             }
         }
 
-        public void SetCurrentUserFolder()
+        public bool SetCurrentUserFolder()
         {
             //SetStatus(ProcessStatus.Searching);
             var rootDir = Global.Config.GetValue("RawImageFolder");
@@ -177,12 +177,14 @@ namespace BaiRocs
                 Global.CurrentUserFolder = dirList.FirstOrDefault();//Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();
                 Global.LogWarn("Global.CurrentFolder -->" + Global.CurrentUserFolder.Name);
                 Global.CurrentUser = Global.CurrentUserFolder.Name;
+
+                return true;
             }
             else
             {
                 //TODO...
                 //nothing to convert- no log files
-
+                return false;
             }
 
 
@@ -245,64 +247,76 @@ namespace BaiRocs
 
 
             //1. //rgalvez folder Set CURRENT USER folder 
-            SetCurrentUserFolder();
-
-            //2 rgalvez/imagefolder
-            var rootImageFolder = Global.CurrentUserFolder;
-            Global.CurrentListImageFolder = rootImageFolder.GetDirectories();
-
-            //3. get log.txt list
-            var logList = rootImageFolder.GetFiles("log.txt", SearchOption.AllDirectories).ToList();
-            logList = logList.OrderBy(f => f.CreationTime).ToList();
-
-            var currentLog = logList.FirstOrDefault();
             List<FileInfo> imageFiles = new List<FileInfo>();
 
-            if (logList.Count>0)
+            if (SetCurrentUserFolder())
             {
-                Global.CurrentImageFolder = currentLog.Directory;
-                
+                //2 rgalvez/imagefolder
+                var rootImageFolder = Global.CurrentUserFolder;
 
-                //4. final list of images in current folder
-                var filesAll = Global.CurrentImageFolder.GetFiles();
-                List<string> restrictions = new List<string>
+
+                Global.CurrentListImageFolder = rootImageFolder.GetDirectories();
+
+                //3. get log.txt list
+                var logList = rootImageFolder.GetFiles("log.txt", SearchOption.AllDirectories).ToList();
+                logList = logList.OrderBy(f => f.CreationTime).ToList();
+
+                var currentLog = logList.FirstOrDefault();
+
+                if (logList.Count > 0)
+                {
+                    Global.CurrentImageFolder = currentLog.Directory;
+
+
+                    //4. final list of images in current folder
+                    var filesAll = Global.CurrentImageFolder.GetFiles();
+                    List<string> restrictions = new List<string>
                 {
                     ".bmp",
                     ".png",
                     ".jpg"
                 };
-                foreach (var f in filesAll)
-                {
-                    var fname = f.FullName;
-                    var ext = Path.GetExtension(fname);
-                    if (!restrictions.Contains(ext.ToLower()))
+                    foreach (var f in filesAll)
                     {
-                        var filename = Path.GetFileName(fname);
-                        if (filename != "log.txt" && filename != "receipt.csv")
+                        var fname = f.FullName;
+                        var ext = Path.GetExtension(fname);
+                        if (!restrictions.Contains(ext.ToLower()))
                         {
-                            File.Delete(fname);
-                            Global.LogError("File Deleted..." + fname);
-                            //bindingSource1.RemoveCurrent();
+                            var filename = Path.GetFileName(fname).ToLower();
+                            if (filename != "log.txt" && filename != "receipt.csv")
+                            {
+                                File.Delete(fname);
+                                Global.LogError("File Deleted..." + fname);
+                                //bindingSource1.RemoveCurrent();
+                            }
+
+                        }
+                        else
+                        {
+                            imageFiles.Add(f);
                         }
 
                     }
-                    else
-                    {
-                        imageFiles.Add(f);
-                    }
-
                 }
-            } 
+                else
+                {
+                    Global.CurrentImageFolder = null;
+                }
+
+                //5 so what is the current image folder
+
+
+                bindingSource1.DataSource = imageFiles.ToList();
+                dgFiles.DataSource = bindingSource1;
+            }
             else
             {
-                Global.CurrentImageFolder = null;
+                bindingSource1.DataSource = imageFiles.ToList();
+                dgFiles.DataSource = bindingSource1;
+                Global.LogWarn("Nothing to convert.");
             }
 
-            //5 so what is the current image folder
-
-
-            bindingSource1.DataSource = imageFiles.ToList();
-            dgFiles.DataSource = bindingSource1;
+            
 
             SetStatus(ProcessStatus.Ready);
 
