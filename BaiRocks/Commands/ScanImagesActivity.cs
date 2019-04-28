@@ -58,11 +58,21 @@ namespace BaiRocs.Commands
 
         private void AzureSvc_OnReadDone(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
-            BaiRocService azureSvc = (BaiRocService)sender;
-            Global.OcrLines = azureSvc.RawList;
-            //bindingSourceOCR.DataSource = Global.OcrLines;
-            //dgOCR.DataSource = bindingSourceOCR;
+
+            if (Global.ProcessStatus == ProcessStatus.Error.ToString())
+            {
+                //back to search...
+                var err = (Exception)sender;
+                Global.LogError(err.Message);
+            }
+            else
+            {
+                //throw new NotImplementedException();
+                BaiRocService azureSvc = (BaiRocService)sender;
+                Global.OcrLines = azureSvc.RawList;
+                //bindingSourceOCR.DataSource = Global.OcrLines;
+                //dgOCR.DataSource = bindingSourceOCR;
+            }
             Global.ProcessStatus = ProcessStatus.Ready.ToString();
         }
 

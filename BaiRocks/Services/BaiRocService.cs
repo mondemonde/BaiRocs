@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BaiRocs.Services
@@ -93,11 +94,22 @@ namespace BaiRocs.Services
             using (Stream imageStream = File.OpenRead(imagePath))
             {
                 // Start the async process to recognize the text
-                BatchReadFileInStreamHeaders textHeaders =
-                    await computerVision.BatchReadFileInStreamAsync(
-                        imageStream, textRecognitionMode);
+                try
+                {
+                    BatchReadFileInStreamHeaders textHeaders =
+                  await computerVision.BatchReadFileInStreamAsync(
+                      imageStream, textRecognitionMode);
 
-                await GetTextAsync(computerVision, textHeaders.OperationLocation);
+                    await GetTextAsync(computerVision, textHeaders.OperationLocation);
+                }
+                catch (Exception err)
+                {
+
+                    Global.ProcessStatus = ProcessStatus.Error.ToString();
+                    //Thread.Sleep(100);
+                    OnReadDone?.Invoke(err, EventArgs.Empty);
+                }
+              
             }
 
             //DO FILTER
@@ -108,50 +120,59 @@ namespace BaiRocs.Services
         private  async Task GetTextAsync(
             ComputerVisionClient computerVision, string operationLocation)
         {
-            // Retrieve the URI where the recognized text will be
-            // stored from the Operation-Location header
-            string operationId = operationLocation.Substring(
-                operationLocation.Length - numberOfCharsInOperationId);
-
-            Console.WriteLine("\nCalling GetReadOperationResultAsync()");
-            ReadOperationResult result =
-                await computerVision.GetReadOperationResultAsync(operationId);
-
-            // Wait for the operation to complete
-            int i = 0;
-            int maxRetries = 10;
-            while ((result.Status == TextOperationStatusCodes.Running ||
-                    result.Status == TextOperationStatusCodes.NotStarted) && i++ < maxRetries)
+            try
             {
-                Console.WriteLine(
-                    "Server status: {0}, waiting {1} seconds...", result.Status, i);
-                await Task.Delay(1000);
+                // Retrieve the URI where the recognized text will be
+                // stored from the Operation-Location header
+                string operationId = operationLocation.Substring(
+                    operationLocation.Length - numberOfCharsInOperationId);
 
-                result = await computerVision.GetReadOperationResultAsync(operationId);
-            }
+                Console.WriteLine("\nCalling GetReadOperationResultAsync()");
+                ReadOperationResult result =
+                    await computerVision.GetReadOperationResultAsync(operationId);
 
-            // Display the results
-            Console.WriteLine();
-            var recResults = result.RecognitionResults;
-
-            int lineNo = 0;
-            foreach (TextRecognitionResult recResult in recResults)
-            {
-                foreach (Line line in recResult.Lines)
+                // Wait for the operation to complete
+                int i = 0;
+                int maxRetries = 10;
+                while ((result.Status == TextOperationStatusCodes.Running ||
+                        result.Status == TextOperationStatusCodes.NotStarted) && i++ < maxRetries)
                 {
-                    lineNo += 1;
-                    Console.WriteLine(line.Text);
-                    BaiOcrLine ocr = new BaiOcrLine
-                    {
-                        LineNo = lineNo,
-                        Content = line.Text                         
-                    };
-                    RawList.Add(ocr);
+                    Console.WriteLine(
+                        "Server status: {0}, waiting {1} seconds...", result.Status, i);
+                    await Task.Delay(1000);
+
+                    result = await computerVision.GetReadOperationResultAsync(operationId);
                 }
+
+                // Display the results
+                Console.WriteLine();
+                var recResults = result.RecognitionResults;
+
+                int lineNo = 0;
+                foreach (TextRecognitionResult recResult in recResults)
+                {
+                    foreach (Line line in recResult.Lines)
+                    {
+                        lineNo += 1;
+                        Console.WriteLine(line.Text);
+                        BaiOcrLine ocr = new BaiOcrLine
+                        {
+                            LineNo = lineNo,
+                            Content = line.Text
+                        };
+                        RawList.Add(ocr);
+                    }
+                }
+                Console.WriteLine();
+                Global.ProcessStatus = ProcessStatus.Ready.ToString();
+                OnReadDone?.Invoke(this, EventArgs.Empty);
             }
-            Console.WriteLine();
-            Global.ProcessStatus = ProcessStatus.Ready.ToString();
-            OnReadDone?.Invoke(this, EventArgs.Empty);
+            catch (Exception err)
+            {
+                throw err;
+
+            }
+
 
         }
 

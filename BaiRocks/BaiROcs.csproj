@@ -137,19 +137,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Elect.cs" />
-    <Compile Include="Commands\AddSigma.cs" />
-    <Compile Include="Commands\ScanCmdParam.cs" />
-    <Compile Include="Commands\WeightDetails.cs" />
-    <Compile Include="Commands\WeightTotalAmount.cs" />
-    <Compile Include="Commands\WeightDateSold.cs" />
-    <Compile Include="Commands\WeightAddress.cs" />
-    <Compile Include="Commands\WeightVendorTIN.cs" />
-    <Compile Include="Commands\WeightVendorName.cs" />
     <Compile Include="Commands\ProcessBookMarkOfCmdParam.cs" />
     <Compile Include="Commands\ProcessBookMarkOfString.cs" />
-    <Compile Include="Commands\GetBatchFiles.cs" />
-    <Compile Include="Commands\FilterForImage.cs" />
+    <Compile Include="Commands\ScanCmdParam.cs" />
     <Compile Include="Commands\ScanImagesActivity.cs" />
     <Compile Include="Commands\TestSample.cs" />
     <Compile Include="Commands\TestSampleCmdParam.cs" />
@@ -242,6 +232,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Activities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaiRocAgent\BaiRocAgent.csproj">
+      <Project>{9fee10a0-c8ad-40f3-90c4-90c2dd578c56}</Project>
+      <Name>BaiRocAgent</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

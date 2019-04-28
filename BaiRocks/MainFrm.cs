@@ -173,10 +173,11 @@ namespace BaiRocs
             {
                 DirectoryInfo[] Folders = motherDir.GetDirectories("*", SearchOption.TopDirectoryOnly); //( Directory.getd(rootDir, "*.*", SearchOption.AllDirectories).Take(5);
                 var userStart = currentLog.DirectoryName.ToLower();
-                var dirList = Folders.ToList().Where(f =>userStart.StartsWith(f.FullName.ToLower()) );
-                Global.CurrentUserFolder = dirList.FirstOrDefault();//Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();
-                Global.LogWarn("Global.CurrentFolder -->" + Global.CurrentUserFolder.Name);
-                Global.CurrentUser = Global.CurrentUserFolder.Name;
+                var dirList = Folders.ToList().Where(f => userStart.StartsWith(f.FullName.ToLower()));
+                Global.CurrentUserFolder = dirList.FirstOrDefault().FullName;//Folders.OrderBy(f => f.LastAccessTime).FirstOrDefault();
+
+                Global.LogWarn("Global.CurrentFolder -->" + Path.GetFileName(Global.CurrentUserFolder));
+                Global.CurrentUser =Path.GetFileName( Global.CurrentUserFolder);
 
                 return true;
             }
@@ -198,11 +199,15 @@ namespace BaiRocs
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+
+            Global.HasNothingToConvert = false;
+
+
             SetStatus(ProcessStatus.Searching);
             //0. Delete empty folders...
             var rootDir = Global.Config.GetValue("RawImageFolder");
             var deleteFiles = Directory.GetFiles(rootDir, "done.txt", SearchOption.AllDirectories);
-            foreach(string delFile in deleteFiles)
+            foreach (string delFile in deleteFiles)
             {
                 try
                 {
@@ -217,14 +222,14 @@ namespace BaiRocs
 
             //delete empty folders
             var users = Directory.GetDirectories(rootDir, "*", SearchOption.TopDirectoryOnly);
-            foreach(string user in users)
+            foreach (string user in users)
             {
                 var images = Directory.GetDirectories(user, "*", SearchOption.TopDirectoryOnly);
                 foreach (string imagedir in images)
                 {
-                    var fileImages = Directory.GetFiles(imagedir,"*.*",SearchOption.AllDirectories);
+                    var fileImages = Directory.GetFiles(imagedir, "*.*", SearchOption.AllDirectories);
                     if (fileImages.Count() == 0)
-                        Directory.Delete(imagedir,true);
+                        Directory.Delete(imagedir, true);
 
                 }
 
@@ -235,9 +240,9 @@ namespace BaiRocs
             foreach (string user in users)
             {
                 var xtrafiles = Directory.GetFiles(user, "*.*", SearchOption.TopDirectoryOnly);
-                foreach(string f in xtrafiles)
+                foreach (string f in xtrafiles)
                 {
-                    if(Path.GetFileName(f)!="receipt.csv")
+                    if (Path.GetFileName(f) != "receipt.csv")
                     {
                         File.Delete(f);
                     }
@@ -255,21 +260,24 @@ namespace BaiRocs
                 var rootImageFolder = Global.CurrentUserFolder;
 
 
-                Global.CurrentListImageFolder = rootImageFolder.GetDirectories();
+                //Global.CurrentListImageFolder =new DirectoryInfo(rootImageFolder).GetDirectories();
 
                 //3. get log.txt list
-                var logList = rootImageFolder.GetFiles("log.txt", SearchOption.AllDirectories).ToList();
+                var logList =new DirectoryInfo(rootImageFolder).GetFiles("log.txt", SearchOption.AllDirectories).ToList();
                 logList = logList.OrderBy(f => f.CreationTime).ToList();
 
                 var currentLog = logList.FirstOrDefault();
 
                 if (logList.Count > 0)
                 {
-                    Global.CurrentImageFolder = currentLog.Directory;
-
+                    //Global.CurrentImageFolder = currentLog.Directory;
+                    var CurrentImageFolder = currentLog.Directory;
+                    Global.CurrentImageFolder = CurrentImageFolder.FullName;
 
                     //4. final list of images in current folder
-                    var filesAll = Global.CurrentImageFolder.GetFiles();
+                    //var filesAll = Global.CurrentImageFolder.GetFiles();
+                    var filesAll = CurrentImageFolder.GetFiles();
+
                     List<string> restrictions = new List<string>
                 {
                     ".bmp",
@@ -300,7 +308,8 @@ namespace BaiRocs
                 }
                 else
                 {
-                    Global.CurrentImageFolder = null;
+                    //Global.CurrentImageFolder = null;
+                    Global.CurrentImageFolder = string.Empty;
                 }
 
                 //5 so what is the current image folder
@@ -314,9 +323,11 @@ namespace BaiRocs
                 bindingSource1.DataSource = imageFiles.ToList();
                 dgFiles.DataSource = bindingSource1;
                 Global.LogWarn("Nothing to convert.");
+                Global.HasNothingToConvert = true;
+
             }
 
-            
+
 
             SetStatus(ProcessStatus.Ready);
 
@@ -331,34 +342,32 @@ namespace BaiRocs
             //if no more image file in the current folder...
             if (bindingSource1.Current == null || bindingSource1.Count == 0)
             {
-                bool isbusy = true;
-                while (isbusy == true)
+                //bool isbusy = true;
+                //while (isbusy == true)
+                //{
+
+                //}
+                try
                 {
-                    try
+                    // Global.CurrentFolder.LastAccessTime = DateTime.Now;
+                    //var filename = Path.Combine(Global.CurrentUserFolder.FullName, "log.txt");
+                    //File.AppendAllText(filename, "checked: " + DateTime.Now.ToShortDateString()
+                    //    + " " + DateTime.Now.ToLongTimeString() + Environment.NewLine);
+
+                    if (!string.IsNullOrEmpty(Global.CurrentImageFolder))
                     {
-                        // Global.CurrentFolder.LastAccessTime = DateTime.Now;
-                        //var filename = Path.Combine(Global.CurrentUserFolder.FullName, "log.txt");
-                        //File.AppendAllText(filename, "checked: " + DateTime.Now.ToShortDateString()
-                        //    + " " + DateTime.Now.ToLongTimeString() + Environment.NewLine);
-
-                        if(Global.CurrentImageFolder!=null)
-                        {
-                            var filename2 = Path.Combine(Global.CurrentImageFolder.FullName, "done.txt");
-                            //make chnges to folder
-                            if (File.Exists(filename2))
-                                File.Delete(filename2);
-
-                            var stream = File.Create(filename2);
-                            stream.Close();
-                        }
-
-                      
-                        isbusy = false;
+                        var filename2 = Path.Combine(Global.CurrentImageFolder, "done.txt");
+                        var stream = File.Create(filename2);
+                        stream.Close();
+                        Global.CurrentImageFolder = string.Empty;
+                        Thread.Sleep(100);
                     }
-                    catch (Exception)
-                    {
-                        Thread.Sleep(1000);
-                    }
+
+
+                }
+                catch (Exception)
+                {
+                    Thread.Sleep(1000);
                 }
 
                 SetStatus(ProcessStatus.Ready);
@@ -404,11 +413,12 @@ namespace BaiRocs
             WaitForReady();
             SetStatus(ProcessStatus.Scanning);
             FileInfo current = (FileInfo)bindingSource1.Current;
-            //BaiRocService azureSvc = new BaiRocService();
-            //azureSvc.OnReadDone += AzureSvc_OnReadDone;
-            //var fname = current.FullName;
-            //azureSvc.ReadImage(fname);
-
+            Global.CurrentImagePath = current.FullName;
+            if(current==null)
+            {
+                Global.HasNothingToConvert = true;
+                return;
+            }
 
             ScanImageCmdParam p = new ScanImageCmdParam();
             p.FileFullPath = current.FullName;
@@ -424,22 +434,40 @@ namespace BaiRocs
                 Application.DoEvents();
             }
 
-            bindingSourceOCR.DataSource = Global.OcrLines;
-            dgOCR.DataSource = bindingSourceOCR;
-            SetStatus(ProcessStatus.Ready);
+            AzureSvc_OnReadDone(sender, e);
+
+            //if (Global.ProcessStatus == ProcessStatus.Ready.ToString())
+            //{
+            //    bindingSourceOCR.DataSource = Global.OcrLines;
+            //    dgOCR.DataSource = bindingSourceOCR;
+            //    SetStatus(ProcessStatus.Ready);
+            //}
 
 
         }
 
         private void AzureSvc_OnReadDone(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
-            BaiRocService azureSvc = (BaiRocService)sender;
-            Global.OcrLines = azureSvc.RawList;
-            bindingSourceOCR.DataSource = Global.OcrLines;
-            dgOCR.DataSource = bindingSourceOCR;
+            if (Global.ProcessStatus == ProcessStatus.Error.ToString())
+            {
+                var err = (Exception)sender;
+                Global.LogError(err.Message);
+            }
+            else
+            {
+                //delete imagerow
+                File.Delete(Global.CurrentImagePath);
+                bindingSource1.Remove(bindingSource1.Current);
+                
+               
 
-            SetStatus(ProcessStatus.Ready);
+                //update ocr list
+                bindingSourceOCR.DataSource = Global.OcrLines;
+                dgOCR.DataSource = bindingSourceOCR;
+                Application.DoEvents();
+                SetStatus(ProcessStatus.Ready);
+            }
+
         }
 
         public void SetStatus(ProcessStatus status)
@@ -746,7 +774,7 @@ namespace BaiRocs
 
 
             List<Receipt> table = new List<Receipt>();
-            string user = Global.CurrentUserFolder.Name;
+            string user =Path.GetFileName(Global.CurrentUserFolder);
             Global.CurrentReciept = new Receipt
             {
                 UserFolder = user
@@ -948,7 +976,7 @@ namespace BaiRocs
         {
             using (MyDBContext db = new MyDBContext())
             {
-                var q = db.TableReceipts.Where(r => r.UserFolder == Global.CurrentUserFolder.Name);
+                var q = db.TableReceipts.Where(r => r.UserFolder ==Global.CurrentUser);
                 var list = q.OrderByDescending(r => r.Date).ToList();
 
                 this.bindingSourceCSV.DataSource = list;
@@ -958,7 +986,7 @@ namespace BaiRocs
             }
 
             //export to csv
-            var folder = Global.CurrentUserFolder.FullName;
+            var folder = Global.CurrentUserFolder;
             var file = "receipt.csv";
             var path = Path.Combine(folder, file);
             SaveDataGridViewToCSV(path);
@@ -969,14 +997,47 @@ namespace BaiRocs
         private void btnAutoRun_Click(object sender, EventArgs e)
         {
             chkIsScanBusy.Checked = false;
-            var idle = Global.MakeScanIdle = chkIsScanBusy.Checked;
+            Global.MakeScanIdle = chkIsScanBusy.Checked;
 
-            while (idle == false)
+            while (Global.MakeScanIdle == false)
             {
+                //try
+                //{
                 btnSearch_Click(sender, e);
-
                 btnChekFile_Click(sender, e);
+
+                if (Global.HasNothingToConvert == true)
+                {
+                    Application.DoEvents();
+                    var limit = DateTime.Now.AddSeconds(10);
+
+                    while(DateTime.Now<limit)
+                    {
+                        ConsoleSpinner.Instance.Update();
+                        //AsciiArt.Draw();
+                        Task.Delay(100);
+                        Application.DoEvents();
+                    }
+                    //Task.Delay(5000);
+                    break;
+                }
+                if( bindingSource1.Current==null)
+                {
+                    break;
+                }
+
                 btnScan_Click(sender, e);
+                if (Global.ProcessStatus == ProcessStatus.Error.ToString())
+                {
+                    Global.ProcessStatus = ProcessStatus.Ready.ToString();
+                    break;
+                }
+
+                if (Global.HasNothingToConvert)
+                {
+                    break;
+                }
+
                 btnWeight_Click(sender, e);
                 btnSigma_Click(sender, e);
                 btnElect1_Click(sender, e);
@@ -986,16 +1047,24 @@ namespace BaiRocs
                 btnDetails_Click(sender, e);
                 btnSave_Click(sender, e);
                 btnExcel_Click(sender, e);
+                //}
+                //catch (Exception err)
+                //{
+                //    Global.LogError(err.Message);
+                //    break;
+                //}            
 
 
                 Application.DoEvents();
             }
+            if (Global.MakeScanIdle == false)
+                btnAutoRun_Click(sender, e);
 
         }
 
         void WaitForReady()
         {
-            while (Global.ProcessStatus != ProcessStatus.Ready.ToString())                
+            while (Global.ProcessStatus != ProcessStatus.Ready.ToString())
             {
                 Task.Delay(100);
                 Application.DoEvents();
