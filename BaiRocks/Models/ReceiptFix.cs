@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace BaiRocs.Models
 {
-    public class Receipt : BaseModel
+    public class ReceiptFix : BaseModel
     {
-        //public int UserId { get; set; }
-        public string UserFolder { get; set; }
+         public int ReceiptId { get; set; }
         //public string UserName { get; set; }
         public string Date { get; set; }
         public string Comapany_Name { get; set; }
@@ -24,7 +23,7 @@ namespace BaiRocs.Models
         public string Project { get; set; }
         public string Amount { get; set; }
 
-        public string OcrLines { get; set; }
+
 
     }
 }

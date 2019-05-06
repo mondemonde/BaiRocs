@@ -72,13 +72,13 @@ namespace BaiRocs.Models
             sigmas.Add(new KeyValuePair<string, double>
       (
           ReceiptParts.ChangeTitle.ToString(),
-          SigmaTotalTitle.StandardDeviation(SigmaChangeTitle.Max())
+          SigmaChangeTitle.StandardDeviation(SigmaChangeTitle.Max())
       ));
 
             sigmas.Add(new KeyValuePair<string, double>
       (
           ReceiptParts.AmountTenderTiTle.ToString(),
-          SigmaTotalTitle.StandardDeviation(SigmaTenderTitle.Max())
+          SigmaTenderTitle.StandardDeviation(SigmaTenderTitle.Max())
       ));
 
 

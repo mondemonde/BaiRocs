@@ -20,7 +20,8 @@ namespace BaiRocs.Common
         AmoundTender,
         ChangeTitle,
         Change,
-        Detail
+        Detail,
+        Noise
 
     }
 

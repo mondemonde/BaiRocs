@@ -1,8 +1,8 @@
-﻿-- Script Date: 4/24/2019 11:45 AM  - ErikEJ.SqlCeScripting version 3.5.2.80
+﻿-- Script Date: 5/1/2019 12:10 AM  - ErikEJ.SqlCeScripting version 3.5.2.80
 SET IDENTITY_INSERT [WeightFactors] ON;
 GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
-1,N'Address',N' City',6,{ts '2019-04-15 21:58:35.287'},NULL);
+1,N'Address',N' City',5,{ts '2019-04-15 21:58:35.287'},NULL);
 GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
 2,N'Address',N' Ave',2,{ts '2019-04-15 21:59:02.580'},NULL);
@@ -166,7 +166,43 @@ GO
 INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
 55,N'VendorName',N'Services',1,{ts '2019-04-22 01:46:31.293'},NULL);
 GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+56,N'Address',N':',-5,{ts '2019-04-26 10:57:42.330'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+57,N'Address',N'Blk',2,{ts '2019-04-26 11:04:33.910'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+58,N'Address',N'Lot',1,{ts '2019-04-26 11:04:41.250'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+59,N'Address',N'Pasig',2,{ts '2019-04-29 15:13:08.967'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+60,N'Address',N'Pasig City',5,{ts '2019-04-29 15:13:25.500'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+61,N'Address',N'Caloocan City',5,{ts '2019-04-29 15:14:36.727'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+62,N'Address',N'Cal',1,{ts '2019-04-29 15:14:52.323'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+63,N'Address',N'Valenzuela',2,{ts '2019-04-29 15:15:19.143'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+64,N'VendorName',N'Corp',3,{ts '2019-04-29 15:40:24.913'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+65,N'DateTitle',N'Accr',-3,{ts '2019-04-30 15:19:45.837'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+66,N'DateTitle',N'AccrDate',-3,{ts '2019-04-30 15:19:58.157'},NULL);
+GO
+INSERT INTO [WeightFactors] ([Id],[Dimension],[keyWord],[Weight],[Created],[Modified]) VALUES (
+67,N'DateTitle',N'BIR',-2,{ts '2019-04-30 15:20:27.140'},NULL);
+GO
 SET IDENTITY_INSERT [WeightFactors] OFF;
 GO
-ALTER TABLE [WeightFactors] ALTER COLUMN [Id] IDENTITY (56,1);
+ALTER TABLE [WeightFactors] ALTER COLUMN [Id] IDENTITY (68,1);
 GO

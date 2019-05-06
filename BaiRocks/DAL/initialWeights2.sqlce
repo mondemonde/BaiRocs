@@ -1,65 +1,62 @@
-﻿-- Script Date: 4/24/2019 11:46 AM  - ErikEJ.SqlCeScripting version 3.5.2.80
+﻿-- Script Date: 5/1/2019 5:18 PM  - ErikEJ.SqlCeScripting version 3.5.2.80
 SET IDENTITY_INSERT [WeightFactorForDetails] ON;
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-1,N'Beauty and wellness',N'Watson',3,NULL,{ts '2019-04-20 07:27:05.547'},NULL);
+1,N'Beauty and wellness',N'Watson',10,NULL,{ts '2019-04-20 07:27:05.547'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-2,N'Gasoline',N'Petron',5,NULL,{ts '2019-04-20 07:27:32.240'},NULL);
+2,N'Gasoline',N'Petron',10,NULL,{ts '2019-04-20 07:27:32.240'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-3,N'Gasoline',N'Shell',3,NULL,{ts '2019-04-20 07:27:49.690'},NULL);
+3,N'Gasoline',N'Shell',7,NULL,{ts '2019-04-20 07:27:49.690'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-4,N'Gasoline',N'Caltex',5,NULL,{ts '2019-04-20 07:28:06.017'},NULL);
+4,N'Gasoline',N'Caltex',10,NULL,{ts '2019-04-20 07:28:06.017'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-5,N'Beauty and wellness',N'Mercury',2,NULL,{ts '2019-04-20 09:36:21.137'},NULL);
+5,N'Beauty and wellness',N'Mercury',10,NULL,{ts '2019-04-20 09:36:21.137'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 6,N'Hotel accomodation/lodging',N'HOTEL',7,NULL,{ts '2019-04-20 09:37:30.860'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-7,N'Internet billing',N'internet',7,NULL,{ts '2019-04-20 09:37:51.987'},NULL);
-GO
-INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 8,N'Home appliances',N'Appliance',7,NULL,{ts '2019-04-20 09:38:10.050'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-9,N'Gasoline',N'Gasoline',7,NULL,{ts '2019-04-20 09:38:35.587'},NULL);
+9,N'Gasoline',N'Gasoline',10,NULL,{ts '2019-04-20 09:38:35.587'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-10,N'Gasoline',N'Diesel',7,NULL,{ts '2019-04-20 09:38:50.867'},NULL);
+10,N'Gasoline',N'Diesel',10,NULL,{ts '2019-04-20 09:38:50.867'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-11,N'Gasoline',N'Gas',3,NULL,{ts '2019-04-20 09:39:07.633'},NULL);
+11,N'Gasoline',N' City',-1,NULL,{ts '2019-04-20 09:39:07.633'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-12,N'Gasoline',N' Gas ',3,NULL,{ts '2019-04-20 09:39:33.910'},NULL);
+12,N'Gasoline',N'Station',1,NULL,{ts '2019-04-20 09:39:33.910'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-13,N'Meal - Others',N' Meal',3,NULL,{ts '2019-04-20 09:40:07.167'},NULL);
+13,N'Meal - Others',N' Meal',10,NULL,{ts '2019-04-20 09:40:07.167'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-14,N'Meal - Others',N'Food',3,NULL,{ts '2019-04-20 09:40:18.397'},NULL);
+14,N'Meal - Others',N'Food',10,NULL,{ts '2019-04-20 09:40:18.397'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-15,N'Meal - Others',N'Lunch',3,NULL,{ts '2019-04-20 09:40:26.847'},NULL);
+15,N'Meal - Others',N'Lunch',10,NULL,{ts '2019-04-20 09:40:26.847'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-16,N'Meal - Others',N'Jollibee',5,NULL,{ts '2019-04-20 09:40:49.007'},NULL);
+16,N'Meal - Others',N'Jollibee',10,NULL,{ts '2019-04-20 09:40:49.007'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-17,N'Meal - Others',N'McDo',5,NULL,{ts '2019-04-20 09:40:56.433'},NULL);
+17,N'Meal - Others',N'McDo',10,NULL,{ts '2019-04-20 09:40:56.433'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-18,N'Meal - Others',N'KFC',5,NULL,{ts '2019-04-20 09:41:09.133'},NULL);
+18,N'Meal - Others',N'KFC',10,NULL,{ts '2019-04-20 09:41:09.133'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-19,N'Meal - Others',N'Chowking',5,NULL,{ts '2019-04-20 09:41:18.490'},NULL);
+19,N'Meal - Others',N'Chowking',10,NULL,{ts '2019-04-20 09:41:18.490'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-20,N'Meal - Others',N'Burger',5,NULL,{ts '2019-04-20 09:41:27.703'},NULL);
+20,N'Meal - Others',N'Burger',10,NULL,{ts '2019-04-20 09:41:27.703'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 21,N'Meal - Others',N'Coke',5,NULL,{ts '2019-04-20 09:41:36.883'},NULL);
@@ -71,16 +68,16 @@ INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Dis
 23,N'Meal - Others',N'Meal ',3,NULL,{ts '2019-04-20 09:42:16.947'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-24,N'Meal - Others',N'Shakey',5,NULL,{ts '2019-04-20 09:42:52.780'},NULL);
+24,N'Meal - Others',N'Shakey',10,NULL,{ts '2019-04-20 09:42:52.780'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-25,N'Meal - Others',N'Pizza',5,NULL,{ts '2019-04-20 09:42:58.167'},NULL);
+25,N'Meal - Others',N'Pizza',10,NULL,{ts '2019-04-20 09:42:58.167'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-26,N'Meal - Others',N'spaghetti',5,NULL,{ts '2019-04-20 09:43:10.387'},NULL);
+26,N'Meal - Others',N'spaghetti',10,NULL,{ts '2019-04-20 09:43:10.387'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-27,N'Meal - Others',N'drink',3,NULL,{ts '2019-04-20 09:43:25.943'},NULL);
+27,N'Meal - Others',N'drink',10,NULL,{ts '2019-04-20 09:43:25.943'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 28,N'Parking fee',N'Park',3,NULL,{ts '2019-04-20 09:43:50.737'},NULL);
@@ -104,7 +101,7 @@ INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Dis
 34,N'Transportation fare/Grab/Uber',N'toll',2,NULL,{ts '2019-04-20 09:46:16.143'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-35,N'Transportation fare/Grab/Uber',N'bus',2,NULL,{ts '2019-04-20 09:46:37.127'},NULL);
+35,N'Transportation fare/Grab/Uber',N'Valenzuela',0,NULL,{ts '2019-04-20 09:46:37.127'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 36,N'Transportation fare/Grab/Uber',N'fare',3,NULL,{ts '2019-04-20 09:47:00.657'},NULL);
@@ -116,42 +113,84 @@ INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Dis
 38,N'Repairs and Maintenance',N'service',3,NULL,{ts '2019-04-20 11:48:44.887'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-39,N'Home appliances',N'Sharp',2,NULL,{ts '2019-04-20 11:50:33.347'},NULL);
+39,N'Home appliances',N'Sharp',5,NULL,{ts '2019-04-20 11:50:33.347'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-40,N'Home appliances',N'LG',1,NULL,{ts '2019-04-20 11:50:45.393'},NULL);
+40,N'Home appliances',N'LG',5,NULL,{ts '2019-04-20 11:50:45.393'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-41,N'Home appliances',N'Samsung',2,NULL,{ts '2019-04-20 11:50:56.350'},NULL);
+41,N'Home appliances',N'Samsung',5,NULL,{ts '2019-04-20 11:50:56.350'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-42,N'Home appliances',N'Akashi',1,NULL,{ts '2019-04-20 11:51:09.230'},NULL);
+42,N'Home appliances',N'Akashi',5,NULL,{ts '2019-04-20 11:51:09.230'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-43,N'Home appliances',N'Hanabishi',2,NULL,{ts '2019-04-20 11:51:30.803'},NULL);
+43,N'Home appliances',N'Hanabishi',5,NULL,{ts '2019-04-20 11:51:30.803'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-44,N'Home appliances',N'Philips',2,NULL,{ts '2019-04-20 12:51:01.370'},NULL);
+44,N'Home appliances',N'Philips',5,NULL,{ts '2019-04-20 12:51:01.370'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-45,N'Home appliances',N'LED',1,NULL,{ts '2019-04-20 12:51:43.883'},NULL);
+45,N'Home appliances',N'LED',2,NULL,{ts '2019-04-20 12:51:43.883'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-46,N'Home appliances',N'Electric',3,NULL,{ts '2019-04-20 12:52:46.163'},NULL);
+46,N'Home appliances',N'Electric',5,NULL,{ts '2019-04-20 12:52:46.163'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 47,N'Home appliances',N'Computer',1,NULL,{ts '2019-04-20 12:53:33.907'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-48,N'Hotel accomodation/lodging',N'Lodge',2,NULL,{ts '2019-04-20 12:53:52.777'},NULL);
+48,N'Hotel accomodation/lodging',N'Lodge',5,NULL,{ts '2019-04-20 12:53:52.777'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
-49,N'Hotel accomodation/lodging',N'Motel',3,NULL,{ts '2019-04-20 12:54:02.823'},NULL);
+49,N'Hotel accomodation/lodging',N'Motel',5,NULL,{ts '2019-04-20 12:54:02.823'},NULL);
 GO
 INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
 50,N'Transportation fare/Grab/Uber',N'ticket',2,NULL,{ts '2019-04-20 12:54:29.407'},NULL);
 GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+51,N'Meal - Others',N'Vegetable',10,NULL,{ts '2019-04-29 15:23:26.607'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+52,N'Meal - Others',N'Supermarket',2,NULL,{ts '2019-04-29 15:24:04.023'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+53,N'Meal - Others',N'Food',3,NULL,{ts '2019-04-29 15:24:18.457'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+54,N'Meal - Others',N'Foods',5,NULL,{ts '2019-04-30 15:04:01.383'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+55,N'Meal - Others',N'Hotdog',10,NULL,{ts '2019-04-30 15:04:22.650'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+56,N'Internet billing',N'Globe ',5,NULL,{ts '2019-04-30 15:05:08.143'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+57,N'Internet billing',N'Smart',5,NULL,{ts '2019-04-30 15:05:17.153'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+58,N'Internet billing',N'telecom',5,NULL,{ts '2019-04-30 15:05:51.073'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+59,N'Internet billing',N'Cellular',5,NULL,{ts '2019-04-30 15:06:23.857'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+60,N'Internet billing',N'Communications',3,NULL,{ts '2019-04-30 15:09:46.873'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+61,N'Meal - Others',N'LIEMPO',5,NULL,{ts '2019-04-30 15:21:49.727'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+63,N'Telephone /Mobile billing',N'Globelines',5,NULL,{ts '2019-04-30 15:32:19.510'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+64,N'Telephone /Mobile billing',N'Communications',5,NULL,{ts '2019-04-30 15:32:44.677'},NULL);
+GO
+INSERT INTO [WeightFactorForDetails] ([Id],[NatureOfTnx],[keyWord],[Weight],[Display],[Created],[Modified]) VALUES (
+65,N'Telephone /Mobile billing',N'mobile',3,NULL,{ts '2019-04-30 15:33:00.037'},NULL);
+GO
 SET IDENTITY_INSERT [WeightFactorForDetails] OFF;
 GO
-ALTER TABLE [WeightFactorForDetails] ALTER COLUMN [Id] IDENTITY (51,1);
+ALTER TABLE [WeightFactorForDetails] ALTER COLUMN [Id] IDENTITY (66,1);
 GO

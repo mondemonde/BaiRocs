@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BaiRocs.Services
@@ -24,7 +25,7 @@ namespace BaiRocs.Services
 
         //}
 
-        public static void ElectOcrLineBySigma(ReceiptParts part)
+        public static void ElectOcrLineBySigmaDeferTotalTitle(ReceiptParts part)
         {
             var ocr = Global.OcrLines.First();
             if (!string.IsNullOrEmpty(ocr.ElectedAs))
@@ -54,8 +55,9 @@ namespace BaiRocs.Services
                 case ReceiptParts.DateSold:
                     break;
                 case ReceiptParts.PriceTitle:
+                    //defer this
                     //ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsTotalTitle).First();
-                    //ocr.ElectedAs = ReceiptParts.PriceTitle.ToString();
+                   // ocr.ElectedAs = ReceiptParts.PriceTitle.ToString();
 
                     break;
                 case ReceiptParts.Price:
@@ -63,7 +65,6 @@ namespace BaiRocs.Services
                 case ReceiptParts.AmountTenderTiTle:
                     ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsTenderTitle).First();
                     ocr.ElectedAs = part.ToString();//ReceiptParts.PriceTitle.ToString();
-
                     break;
                 case ReceiptParts.AmoundTender:
                     break;
@@ -74,12 +75,76 @@ namespace BaiRocs.Services
                     break;
                 case ReceiptParts.Change:
                     break;
+
+              
+
                 default:
                     break;
             }
 
             Global.LogWarn("Elected: " + ocr.Content.ToString() + " ---->" + part.ToString());
         }
+
+        public static void ElectOcrLineBySigmaWithTotalTitle(ReceiptParts part)
+        {
+            var ocr = Global.OcrLines.First();
+            if (!string.IsNullOrEmpty(ocr.ElectedAs))
+                return;
+
+            switch (part)
+            {
+                case ReceiptParts.VendorName:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsVendorName).First();
+                    ocr.ElectedAs = ReceiptParts.VendorName.ToString();
+                    break;
+
+                case ReceiptParts.Address:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsAddress).First();
+                    ocr.ElectedAs = ReceiptParts.Address.ToString();
+                    break;
+
+                case ReceiptParts.VendorTINTitle:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsVendorTINTitle).First();
+                    ocr.ElectedAs = ReceiptParts.VendorTINTitle.ToString();
+                    break;
+
+                case ReceiptParts.DateTitle:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsDateTitle).First();
+                    ocr.ElectedAs = ReceiptParts.DateTitle.ToString();
+                    break;
+                case ReceiptParts.DateSold:
+                    break;
+                case ReceiptParts.PriceTitle:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsTotalTitle).First();
+                    ocr.ElectedAs = ReceiptParts.PriceTitle.ToString();
+
+                    break;
+                case ReceiptParts.Price:
+                    break;
+                case ReceiptParts.AmountTenderTiTle:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsTenderTitle).First();
+                    ocr.ElectedAs = part.ToString();//ReceiptParts.PriceTitle.ToString();
+                    break;
+                case ReceiptParts.AmoundTender:
+                    break;
+                case ReceiptParts.ChangeTitle:
+                    ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsChangeTitle).First();
+                    ocr.ElectedAs = part.ToString();//ReceiptParts.PriceTitle.ToString();
+
+                    break;
+                case ReceiptParts.Change:
+                    break;
+
+
+
+                default:
+                    break;
+            }
+
+            Global.LogWarn("Elected: " + ocr.Content.ToString() + " ---->" + part.ToString());
+        }
+
+
         public static string Refine(string content)
         {
             var split = content.Split(':');
@@ -90,6 +155,38 @@ namespace BaiRocs.Services
 
             return content;
         }
+
+        public static string RefineToMoney(string content)
+        {
+            var split = content.Split(':');
+            string newContent = content;
+            if (split.Length > 1)
+            {
+                newContent = content.Replace(split[0] + ":", string.Empty).Trim();
+            }
+
+            var result = string.Empty;
+            foreach (char c in newContent)
+            {
+                if (char.IsNumber(c) || char.IsDigit(c) || c == '.' || c == ',')
+                {
+                    result += c;
+                    int len = result.Length;
+                    int index = (len - 2) - 1;
+                    if (index > 1)
+                    {
+                        if (result[index] == '.')
+                        {
+                            return result;
+                        }
+                    }
+
+                }
+            }
+
+            return result;
+        }
+
         public static string RefineToTIN(string content)
         {
             string newContent = string.Empty;
@@ -244,7 +341,7 @@ namespace BaiRocs.Services
             {
                 int i = ocr.LineNo + 1;
                 var nextLine =Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
-                if (nextLine.LineNo == 0)
+                if (nextLine == null || nextLine.LineNo == 0)
                 {
                    
                     Global.CurrentReciept.Date = Global.OcrLines.OrderByDescending(o => o.WeightedAsDateTitle).First().Content;
@@ -285,15 +382,57 @@ namespace BaiRocs.Services
 
         }
         public static void GetReceiptTotalValue(BaiOcrLine ocr)
-        {
-            var newContent = Refine(ocr.Content);
+        {   //do 1st level
+            if(!GetReceiptTotalTopLevelOnly(ocr))            
+            {
+                //check next
+                int i = ocr.LineNo + 1;
+                var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
+                if (nextLine == null || nextLine.LineNo == 0)
+                {
+                    Global.CurrentReciept.Amount = Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content;
+                }
+                else
+                {
+                    //do 2nd level
+                    if (!GetReceiptTotalTopLevelOnly(nextLine))
+                    {
+                        //do by tender -change
+                        var change = GetChangeValue();
+                        var tender = GetTenderValue();
+                        if(change.HasValue && tender.HasValue)
+                        {
+                           var amount = (tender.Value - change.Value);
+                            if (amount > 0)
+                            {
+                                Global.CurrentReciept.Amount = amount.ToString();
+                                return;
+                            }
 
+                        }
+                    }
+                }
+                //if not found dig more...
+                GetReceiptTotalValue(nextLine);
+
+            };
+
+
+        }
+
+        public static bool GetReceiptTotalTopLevelOnly(BaiOcrLine ocr)
+        {
+            var newContent = RefineToMoney(ocr.Content);
             var length = newContent.Length;
-            if ((length > 4 && GetPercentNumber(newContent) > 70)
-                || (length>3 && GetPercentNumber(newContent) == 100))
+
+            Regex moneyPattern = new Regex(@"[.\d,]+");
+
+            bool isMatched = (moneyPattern.Match(newContent).Value.Length == length);
+
+            if (((length > 4 && GetPercentNumber(newContent) > 70)
+                || (length > 3 && GetPercentNumber(newContent) == 100)) && isMatched)
             {
                 string result = string.Empty;
-
                 foreach (char c in newContent)
                 {
                     if (char.IsNumber(c) || char.IsDigit(c) || c == '.' || c == ',')
@@ -307,7 +446,7 @@ namespace BaiRocs.Services
                             if (result[index] == '.')
                             {
                                 Global.CurrentReciept.Amount = result;
-                                return;
+                                return true;
                             }
 
 
@@ -316,23 +455,80 @@ namespace BaiRocs.Services
                     }
                 }
             }
+            return false;
+        }
+
+        public static double? GetChangeValue()
+        {
+            double? result=null;
+            var change = Global.OcrLines.Where(l => l.ElectedAs == ReceiptParts.ChangeTitle.ToString()).FirstOrDefault();
+            if(change!=null && change.LineNo>0)
+            {
+                DigValue(change,ref result);
+            }
             else
             {
-                int i = ocr.LineNo + 1;
-                var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
-                if (nextLine.LineNo == 0)
-                {
+                change = Global.OcrLines.OrderBy(l => l.WeightedAsChangeTitle).Last();
+                DigValue(change, ref result);
 
-                    Global.CurrentReciept.Amount = Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content;
-                }
-                else
-                    GetReceiptTotalValue(nextLine);
+            }
+            return result;           
+        }
 
-            };
+        public static double? GetTenderValue()
+        {
+            double? result = null;
+            var tender = Global.OcrLines.Where(l => l.ElectedAs == ReceiptParts.AmountTenderTiTle.ToString()).FirstOrDefault();
+            if ( tender!=null && tender.LineNo > 0)
+            {
+                DigValue(tender, ref result);
+            }
+            else
+            {
+                tender = Global.OcrLines.OrderBy(l => l.WeightedAsTenderTitle).Last();
+                DigValue(tender, ref result);
 
+            }
+            return result;
 
         }
 
+        public static void DigValue(BaiOcrLine ocr, ref double? value)
+        {
+            var newContent = RefineToMoney(ocr.Content);
+            var length = newContent.Length;
 
+            Regex moneyPattern = new Regex(@"[.\d,]+");
+
+            bool isMatched = (moneyPattern.Match(newContent).Value.Length == length);
+
+            if (((length > 4 && GetPercentNumber(newContent) > 70)
+                || (length > 3 && GetPercentNumber(newContent) == 100)) && isMatched)
+            {
+                try
+                {
+                    value = Convert.ToDouble(newContent);
+                    return;
+                }
+                catch (Exception)
+                {
+
+                    //throw;
+                    //continue search
+                }
+              
+            }
+           
+           int i = ocr.LineNo + 1;
+           var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
+           if (nextLine == null || nextLine.LineNo == 0)
+                {
+                    value = null;
+                    return;
+                }
+                else
+                    DigValue(nextLine,ref value);           
+
+        }
     }
 }

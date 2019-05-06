@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug20\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,6 +34,16 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'OFFLINE|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug20\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;OFFLINE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotBits.Configuration">
@@ -162,6 +172,7 @@
       <DependentUpon>MainFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\OcrLine.cs" />
+    <Compile Include="Models\ReceiptFix.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\Sigma.cs" />
     <Compile Include="Models\UserClient.cs" />
@@ -171,8 +182,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaiRocService.cs" />
+    <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\RocsTextService.cs" />
     <Compile Include="WF\Global.cs" />
+    <Content Include="WokingFolder\ReadMe.txt" />
     <None Include="DAL\DataSet1.xsc">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </None>
@@ -232,12 +246,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Activities\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BaiRocAgent\BaiRocAgent.csproj">
-      <Project>{9fee10a0-c8ad-40f3-90c4-90c2dd578c56}</Project>
-      <Name>BaiRocAgent</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

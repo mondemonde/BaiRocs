@@ -24,6 +24,8 @@ namespace BaiRocs.DAL
 
         public IDbSet<TableConfig> TableConfigs { get; set; }
         public IDbSet<Receipt> TableReceipts { get; set; }
+        public IDbSet<ReceiptFix> TableReceiptFixes { get; set; }
+
         public IDbSet<WeightFactor> WeightFactors { get; set; }
         public IDbSet<WeightFactorForDetail> WeightFactorForDetails { get; set; }
 
