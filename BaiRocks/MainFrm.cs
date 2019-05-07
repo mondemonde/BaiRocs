@@ -572,7 +572,7 @@ namespace BaiRocs
                 if (ocrChange != null && ocrChange.ElectedAs == ReceiptParts.ChangeTitle.ToString())
                 {
 
-                    for (int i = ocrTender.LineNo; i > 5; i--)
+                    for (int i = ocrChange.LineNo; i > 5; i--)
                     {
                         if ((Global.OcrLines[i].Content.ToLower().Contains("total")
                         || Global.OcrLines[i].Content.ToLower().Contains("price")) &&

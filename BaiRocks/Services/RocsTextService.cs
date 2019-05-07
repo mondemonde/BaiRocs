@@ -369,10 +369,10 @@ namespace BaiRocs.Services
             {
                 int i = ocr.LineNo + 1;
                 var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
-                if (nextLine.LineNo == 0)
+                if (nextLine ==null || nextLine.LineNo == 0)
                 {
 
-                    Global.CurrentReciept.Date = Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorTINTitle).First().Content;
+                    Global.CurrentReciept.Tax_Identification = Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorTINTitle).First().Content;
                 }
                 else
                     GetReceiptTINValue(nextLine);
@@ -391,6 +391,7 @@ namespace BaiRocs.Services
                 if (nextLine == null || nextLine.LineNo == 0)
                 {
                     Global.CurrentReciept.Amount = Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content;
+                    return;
                 }
                 else
                 {
