@@ -14,23 +14,38 @@ namespace BaiRocAgent
     {
         static void Main(string[] args)
         {
-            //1. ini         
+            //1. ini       
+
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Clear();
+
             var frontDir = FileService.Config.GetValue("FrontFolder");
             string dumpDir = FileService.Config.GetValue("DumpFolder");
+            Global.IdleCountSet = 5;
+            Global.IdleCount = Global.IdleCountSet;
 
-           var  _dirWatcher = new FileSystemWatcher(frontDir);
-            _dirWatcher.IncludeSubdirectories = false;
-            _dirWatcher.NotifyFilter = NotifyFilters.DirectoryName;
-            _dirWatcher.EnableRaisingEvents = true;
-            _dirWatcher.Created += FsWatcher_Created;
+           //var  _dirWatcher = new FileSystemWatcher(frontDir);
+           // _dirWatcher.IncludeSubdirectories = false;
+           // _dirWatcher.NotifyFilter = NotifyFilters.DirectoryName;
+           // _dirWatcher.EnableRaisingEvents = true;
+           // _dirWatcher.Created += FsWatcher_Created;
 
 
             //2.loop
             while (!Global.IsShuttingDown)
             {
-                FileService.CleanRootFolder();
-                FileService.DigForImageFiles(dumpDir,0);
-                Thread.Sleep(10000);
+                try
+                {
+                        FileService.CleanRootFolder();
+                        FileService.DigForImageFiles(dumpDir,0);
+                        Thread.Sleep(10000);
+
+                }
+                catch (Exception err)
+                {
+
+                    Global.LogError(err);
+                }
             }
 
 

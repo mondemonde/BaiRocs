@@ -25,6 +25,7 @@ namespace BaiRocs.WF
 
 
         public static bool IsShuttingDown { get; set; }
+        public static bool AutoRun { get; set; }
 
         //this is itialize by background worker
         public static WorkflowApplication ThisWF;

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using LogApplication.Common.Config;
 using System.IO;
+using System.Diagnostics;
 
 namespace BaiRocAgent
 {
@@ -110,6 +111,22 @@ namespace BaiRocAgent
         public static string CurrentImagePath { get; set; }
         public static bool HasNothingToConvert { get; set; }
 
+        public static int IdleCount { get; set; }
+        public static int IdleCountSet { get; set; }
+
+        public static void RunBaiRocs()
+        {
+            try
+            {
+                string exe = Global.Config.GetValue("BaiRocsExe");
+                Process p = Process.Start(exe,"-autorun");
+            }
+            catch(Exception err)
+            {
+                // Debugger.Break();
+                Global.LogError(err.Message);
+            }
+        }
 
         #endregion end STatic
 

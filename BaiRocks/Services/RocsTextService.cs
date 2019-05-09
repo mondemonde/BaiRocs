@@ -344,7 +344,7 @@ namespace BaiRocs.Services
                 if (nextLine == null || nextLine.LineNo == 0)
                 {
                    
-                    Global.CurrentReciept.Date = Global.OcrLines.OrderByDescending(o => o.WeightedAsDateTitle).First().Content;
+                    Global.CurrentReciept.Date =RefineToDate(Global.OcrLines.OrderByDescending(o => o.WeightedAsDateTitle).First().Content);
                 }
                 else
                     GetReceiptDateValue(nextLine);
@@ -372,7 +372,7 @@ namespace BaiRocs.Services
                 if (nextLine ==null || nextLine.LineNo == 0)
                 {
 
-                    Global.CurrentReciept.Tax_Identification = Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorTINTitle).First().Content;
+                    Global.CurrentReciept.Tax_Identification =RefineToTIN( Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorTINTitle).First().Content);
                 }
                 else
                     GetReceiptTINValue(nextLine);
@@ -390,7 +390,7 @@ namespace BaiRocs.Services
                 var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
                 if (nextLine == null || nextLine.LineNo == 0)
                 {
-                    Global.CurrentReciept.Amount = Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content;
+                    Global.CurrentReciept.Amount =RefineToMoney( Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content);
                     return;
                 }
                 else

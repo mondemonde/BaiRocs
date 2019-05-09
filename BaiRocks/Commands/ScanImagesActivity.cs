@@ -51,7 +51,7 @@ namespace BaiRocs.Commands
                 Global.LogError("ScanImage---> " + err.Message);
                 Global.ProcessStatus = ProcessStatus.Ready.ToString();
             }
-           
+
 
 
         }
@@ -87,4 +87,5 @@ namespace BaiRocs.Commands
         }
 
     }
+
 }

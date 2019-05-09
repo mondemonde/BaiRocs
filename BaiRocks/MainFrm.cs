@@ -68,8 +68,11 @@ namespace BaiRocs
             cbDetailFactor.ValueMember = "Key";
 
             Global.MakeScanIdle = chkIsScanBusy.Checked;
-
             SetStatus(ProcessStatus.Ready);
+
+            if (Global.AutoRun)
+                AutoRun();
+
         }
 
         #region --------------------------GLOBAL METHODS
@@ -855,7 +858,7 @@ namespace BaiRocs
             var receipt = (Receipt)receiptBindingSource.Current;
             receipt.OcrLines = allOcr;
 
-            using (MyDBContext db = new MyDBContext())
+            using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
             {
                 db.TableReceipts.Add(receipt);
                 db.SaveChanges();
@@ -907,7 +910,7 @@ namespace BaiRocs
         private void btnExcel_Click(object sender, EventArgs e)
         {
             string csvName = "receipt";
-            using (MyDBContext db = new MyDBContext())
+            using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
             {
                 var q = db.TableReceipts.Where(r => r.UserFolder == Global.CurrentUser);
                 var list = q.OrderByDescending(r => r.Date).ToList();
@@ -934,6 +937,14 @@ namespace BaiRocs
 
         }
 
+        public void AutoRun()
+        {
+            Global.LogWarn("Autorun started.");
+            btnAutoRun_Click(this, EventArgs.Empty);
+
+        }
+        int shutdown = 4;
+
         private void btnAutoRun_Click(object sender, EventArgs e)
         {
             chkIsScanBusy.Checked = false;
@@ -945,11 +956,21 @@ namespace BaiRocs
                 //{
                 btnSearch_Click(sender, e);
                 btnChekFile_Click(sender, e);
-
                 if (Global.HasNothingToConvert == true)
                 {
                     Application.DoEvents();
                     var limit = DateTime.Now.AddSeconds(10);
+                    shutdown -= 1;
+                    Console.WriteLine("Shutsdown in ..." + shutdown.ToString());
+
+                    if (shutdown < 1)
+                    {
+                        Global.IsShuttingDown = true;
+                        //this.Close();
+                       // System.Windows.Forms.Application.Exit();
+                       System.Environment.Exit(0);
+
+                    }
 
                     while (DateTime.Now < limit)
                     {
@@ -980,6 +1001,10 @@ namespace BaiRocs
 
                 if (Global.OcrLines == null)
                     break;
+
+                //keep running..
+                shutdown = 4;
+
                 btnWeight_Click(sender, e);
                 btnSigma_Click(sender, e);
                 btnElect1_Click(sender, e);
@@ -1012,7 +1037,7 @@ namespace BaiRocs
         {
             if (MessageBox.Show("Do you want to clear all records in the database?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                using (MyDBContext db = new MyDBContext())
+                using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
                 {
                     db.Database.ExecuteSqlCommand("DELETE FROM [Receipts]");
 

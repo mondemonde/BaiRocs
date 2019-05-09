@@ -1,5 +1,6 @@
 ﻿using BaiRocAgent;
 using LogApplication;
+using LogApplication.Common;
 using LogApplication.Common.Config;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,8 @@ namespace BaiRocs.Services
         public static void CleanRootFolder()
         {
 
+
+
             //0. Delete empty folders...
             var rootDir = Config.GetValue("FrontFolder");
             var deleteFiles = Directory.GetFiles(rootDir, "done.txt", SearchOption.AllDirectories);
@@ -80,20 +83,28 @@ namespace BaiRocs.Services
                 foreach (string user in users)
                 {
                     var images = Directory.GetDirectories(user, "*", SearchOption.TopDirectoryOnly);
+
+                    
+
                     foreach (string imagedir in images)
                     {
-                        var fileImages = Directory.GetFiles(imagedir, "*.*", SearchOption.AllDirectories);
-
-                        if (fileImages.Count() == 0)
-                            Directory.Delete(imagedir, true);
-                        else if(fileImages.Count()==1)
+                       DirectoryInfo dir = new DirectoryInfo(imagedir);
+                       TimeSpan span =  DateTime.Now - dir.CreationTime;
+                        if (span.Minutes > 30)
                         {
-                            if(Path.GetFileName(fileImages[0]).ToLower() == "log.txt")
-                            {
+                            var fileImages = Directory.GetFiles(imagedir, "*.*", SearchOption.AllDirectories);
+
+                            if (fileImages.Count() == 0)
                                 Directory.Delete(imagedir, true);
+
+                            else if (fileImages.Count() == 1)
+                            {
+                                if (Path.GetFileName(fileImages[0]).ToLower() == "log.txt")
+                                {
+                                    Directory.Delete(imagedir, true);
+                                }
                             }
                         }
-
                     }
 
                 }
@@ -341,6 +352,7 @@ namespace BaiRocs.Services
         //    }
         //}
 
+
         public static void DigForImageFiles(string dumpDir,int index)
         {
             var images = FileService.FindImages(index);
@@ -373,11 +385,30 @@ namespace BaiRocs.Services
                         CreateLogText(dumpFolder);
 
 
+                if(images.Count>0)
+                {
+                  if(!CheckIsScannerRunning())
+                    {
+                        Global.RunBaiRocs();
+                    }
+                }
+
             }
             else
             {
-
-                Agent.LogWarn("Idle status---" + DateTime.Now.Ticks.ToString());
+                Global.IdleCount -= 1;
+                Agent.LogWarn("Idle status---" + Global.IdleCount.ToString());
+                if(Global.IdleCount <= 0)
+                {
+                   if(! CheckIsScannerRunning())
+                    {
+                        Global.IdleCount = Global.IdleCountSet;
+                        //scann dump file
+                        Global.RunBaiRocs();
+                    }
+                }
+                
+               
             }
         }
 
@@ -392,6 +423,51 @@ namespace BaiRocs.Services
 
 
         }
+
+        public static bool CheckIsScannerRunning()
+        {
+            try
+            {
+                #region --------------------TRY CONTENT----------------------
+                //string dumpDir = FileService.Config.GetValue("RawImageFolder");//dump folder in bairocs scannner
+                string dumpDir = FileService.Config.GetValue("DumpFolder");//dump folder bairocs agent
+
+                string fMesage = dumpDir + "\\running.txt";
+                if (File.Exists(fMesage))
+                {
+                    //File.Delete(fMesage);
+                    FileInfo f = new FileInfo(fMesage);
+                    f.Delete();
+                }
+
+                //check for 3 sec
+                var limit = DateTime.Now.AddSeconds(3);
+                while (DateTime.Now < limit)
+                {
+                    ConsoleSpinner.Instance.Update();
+                    //AsciiArt.Draw();
+                    //Task.Delay(100);
+                }
+
+                if (File.Exists(fMesage))
+                {
+                    return true;
+                }
+                else
+                   return false;
+
+                #endregion
+            }
+            catch (Exception err)
+            {
+
+                Global.LogError("FileMesssageActivity---> " + err.Message);
+                return true;
+            }
+
+
+        }
+
     }
 
 }
