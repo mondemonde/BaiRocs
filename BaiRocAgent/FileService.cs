@@ -90,19 +90,18 @@ namespace BaiRocs.Services
                     {
                        DirectoryInfo dir = new DirectoryInfo(imagedir);
                        TimeSpan span =  DateTime.Now - dir.CreationTime;
+                       var fileImages = Directory.GetFiles(imagedir, "*.*", SearchOption.AllDirectories);
+
                         if (span.Minutes > 30)
                         {
-                            var fileImages = Directory.GetFiles(imagedir, "*.*", SearchOption.AllDirectories);
-
                             if (fileImages.Count() == 0)
-                                Directory.Delete(imagedir, true);
-
-                            else if (fileImages.Count() == 1)
+                                Directory.Delete(imagedir, true);                           
+                        }
+                        if (fileImages.Count() == 1)
+                        {
+                            if (Path.GetFileName(fileImages[0]).ToLower() == "log.txt")
                             {
-                                if (Path.GetFileName(fileImages[0]).ToLower() == "log.txt")
-                                {
-                                    Directory.Delete(imagedir, true);
-                                }
+                                Directory.Delete(imagedir, true);
                             }
                         }
                     }
@@ -111,10 +110,8 @@ namespace BaiRocs.Services
             }
             catch (Exception err)
             {
-
                 Global.LogError(err.Message);
             }
-
 
             //remove log.txt etc  in user folder
             try
@@ -444,9 +441,10 @@ namespace BaiRocs.Services
                 var limit = DateTime.Now.AddSeconds(3);
                 while (DateTime.Now < limit)
                 {
-                    ConsoleSpinner.Instance.Update();
+                    //ConsoleSpinner.Instance.Update();
                     //AsciiArt.Draw();
-                    //Task.Delay(100);
+                    Console.WriteLine(DateTime.Now.Ticks.ToString());
+                    Task.Delay(100);
                 }
 
                 if (File.Exists(fMesage))
@@ -461,7 +459,8 @@ namespace BaiRocs.Services
             catch (Exception err)
             {
 
-                Global.LogError("FileMesssageActivity---> " + err.Message);
+                ///Global.LogError("FileMesssageActivity---> " + err.Message);
+                Global.LogError(err);
                 return true;
             }
 

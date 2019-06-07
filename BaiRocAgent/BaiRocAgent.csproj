@@ -119,10 +119,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileAssembly.cs">
+      <DependentUpon>FileAssembly.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="FileService.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="winFormAgent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +142,10 @@
     </Content>
     <None Include="BaiRocAgent_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <Content Include="FileAssembly.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FileAssembly.cs</LastGenOutput>
+    </Content>
     <Content Include="ReadMe.url">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -158,6 +166,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

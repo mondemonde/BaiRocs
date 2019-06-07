@@ -3,6 +3,7 @@ using BaiRocs.Models;
 using BaiRocs.WF;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BaiRocs.Services
 {
-   public class RocsTextService
+    public class RocsTextService
     {
         //public static string GetVendorName(List<string> rawList)
         //{
@@ -57,7 +58,7 @@ namespace BaiRocs.Services
                 case ReceiptParts.PriceTitle:
                     //defer this
                     //ocr = Global.OcrLines.OrderByDescending(w => w.WeightedAsTotalTitle).First();
-                   // ocr.ElectedAs = ReceiptParts.PriceTitle.ToString();
+                    // ocr.ElectedAs = ReceiptParts.PriceTitle.ToString();
 
                     break;
                 case ReceiptParts.Price:
@@ -76,7 +77,7 @@ namespace BaiRocs.Services
                 case ReceiptParts.Change:
                     break;
 
-              
+
 
                 default:
                     break;
@@ -148,11 +149,79 @@ namespace BaiRocs.Services
         public static string Refine(string content)
         {
             var split = content.Split(':');
-            if(split.Length>1)
+            if (split.Length > 1)
             {
-              content =  content.Replace(split[0] + ":",string.Empty).Trim();
+                content = content.Replace(split[0] + ":", string.Empty).Trim();
             }
 
+            return content;
+        }
+
+        public static void RefineOcr(BaiOcrLine ocr, ref List<BaiOcrLine> newLines)
+        {
+            //string totalContent = ocr.Content;
+
+            var splitAll = ocr.Content.Split(':').ToList();
+
+
+            HashSet<string> hashResult = new HashSet<string>();
+
+            for (int i = 0; i < splitAll.Count; i++)
+            {
+                string content = string.Empty;
+                content = splitAll[i];
+                Console.WriteLine(content);
+
+                if (string.IsNullOrEmpty(content))
+                    continue;
+                content = content.Trim();
+                var head = content.Split().Last();
+                var first = content.Replace(head, string.Empty);
+
+
+                if (splitAll.Count == 1)
+                {
+                    head = splitAll[0];
+                    // first = splitAll[1];
+                    hashResult.Add(head);
+                }
+                else if(splitAll.Count==2)
+                {
+                    hashResult.Add(splitAll[0]);
+                    hashResult.Add(splitAll[1]);
+
+                }
+                else if (i == splitAll.Count - 1)
+                {
+                    hashResult.Add(content);
+                }
+                else
+                {
+
+                    if (!string.IsNullOrEmpty(first))
+                    {
+                        hashResult.Add(first);
+
+                    }
+                    hashResult.Add(head);
+                }
+
+            }       
+
+            foreach(string l in hashResult)
+            {
+                BaiOcrLine ocr1 = new BaiOcrLine {
+                    Content = l
+                };
+                newLines.Add(ocr1);
+                Console.WriteLine(l);
+            }
+           
+        }
+
+        private static string NewMethod(List<string> splitAll, string content, int i)
+        {
+            content += splitAll[i];
             return content;
         }
 
@@ -190,20 +259,34 @@ namespace BaiRocs.Services
         public static string RefineToTIN(string content)
         {
             string newContent = string.Empty;
-            foreach(char c in content)
+            foreach (char c in content)
             {
-                if(char.IsNumber(c)|| c=='-')
+                if (char.IsNumber(c) || c == '-')
                 {
                     newContent += c;
                 }
             }
             return newContent;
         }
+
+        public static string RefineToPureNumber(string content)
+        {
+            string newContent = string.Empty;
+            foreach (char c in content)
+            {
+                if (char.IsNumber(c))
+                {
+                    newContent += c;
+                }
+            }
+            return newContent;
+        }
+
         public static string RefineToDate(string content)
         {
-           content = content.ToLower().Replace("date", string.Empty);
-           content = content.ToLower().Replace(":", string.Empty);
-           string newContent = string.Empty;
+            content = content.ToLower().Replace("date", string.Empty);
+            content = content.ToLower().Replace(":", string.Empty);
+            string newContent = string.Empty;
 
             if (content.Contains('/'))
             {
@@ -220,7 +303,7 @@ namespace BaiRocs.Services
                     strYear = strYear.Substring(2, 2);
 
                     var length = newContent.Length;
-                    if(length>=8)
+                    if (length >= 8)
                     {
                         if (newContent.EndsWith(strYear))
                             return newContent;
@@ -253,6 +336,32 @@ namespace BaiRocs.Services
 
             return newContent;
         }
+
+        public static string RefineToVendorName(string content)
+        {
+            content = Refine(content);
+
+            content = content.ToLower().Replace("vendor", string.Empty);
+            content = content.ToLower().Replace("dealers", string.Empty);
+
+            content = content.ToLower().Replace("dealer", string.Empty);
+            content = content.ToLower().Replace(":", string.Empty);
+
+            content = FormatToProperCasing(content);
+
+            return content.Trim();
+        }
+
+        public static string FormatToProperCasing(string title)
+        {
+            if (string.IsNullOrEmpty(title))
+                return string.Empty;
+
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            title =  textInfo.ToTitleCase(title.ToLower().Trim());
+            return title;
+        }
+
         public static double GetPercentNumber(string Content)
         {
             var text = Content.Trim();
@@ -279,7 +388,7 @@ namespace BaiRocs.Services
         public static double GetPercentLocation(BaiOcrLine ocr)
         {
 
-            var totalCnt =Convert.ToDouble(Global.OcrLines.Count());
+            var totalCnt = Convert.ToDouble(Global.OcrLines.Count());
             var i = Convert.ToDouble(ocr.LineNo);
             double percent = i / totalCnt;
             return percent * 100;
@@ -289,14 +398,29 @@ namespace BaiRocs.Services
         public static void GetReceiptVendorName()
         {
             string vendor = string.Empty;
-            vendor = Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorName).First().Content;
-
-            foreach (BaiOcrLine ocr in Global.OcrLines)
+            try
             {
-                if(ocr.ElectedAs== ReceiptParts.VendorName.ToString())
+                vendor = Global.OcrLines.First(o => o.ElectedAs == ReceiptParts.VendorName.ToString()).Content;
+
+            }
+            catch (Exception)
+            {
+
+                //in no elected yet
+                vendor = Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorName).First().Content;
+
+                foreach (BaiOcrLine ocr in Global.OcrLines)
                 {
-                    vendor = ocr.Content;
+                    if (ocr.ElectedAs == ReceiptParts.VendorName.ToString())
+                    {
+                        vendor = ocr.Content;
+                    }
                 }
+            }
+
+            finally
+            {
+              vendor =  RocsTextService.RefineToVendorName(vendor);
             }
 
             Global.CurrentReciept.Comapany_Name = vendor;
@@ -305,26 +429,36 @@ namespace BaiRocs.Services
         public static void GetReceiptVendorAddress()
         {
             string address = string.Empty;
-            address = Global.OcrLines.OrderByDescending(o => o.WeightedAsAddress).First().Content;
 
-            foreach (BaiOcrLine ocr in Global.OcrLines)
+            try
             {
-                if (ocr.ElectedAs == ReceiptParts.Address.ToString())
+                address = Global.OcrLines.First(o => o.ElectedAs == ReceiptParts.Address.ToString()).Content;
+
+            }
+            catch (Exception)
+            {
+
+                address = Global.OcrLines.OrderByDescending(o => o.WeightedAsAddress).First().Content;
+
+                foreach (BaiOcrLine ocr in Global.OcrLines)
                 {
-                    address = ocr.Content;
+                    if (ocr.ElectedAs == ReceiptParts.Address.ToString())
+                    {
+                        address = ocr.Content;
+                    }
                 }
             }
+            finally
+            {
+                address = Refine(address);
+            }
 
-            Global.CurrentReciept.Address = address;
-
+            Global.CurrentReciept.Address =RocsTextService.FormatToProperCasing(address);
         }
-
-
-
 
         public static void GetReceiptDateValue(BaiOcrLine ocr)
         {
-            var newContent = RefineToDate (ocr.Content);
+            var newContent = RefineToDate(ocr.Content);
             var year = DateTime.Now.Date.Year;
             string strYear = year.ToString();
             strYear = strYear.Substring(2, 2);
@@ -340,11 +474,11 @@ namespace BaiRocs.Services
             else
             {
                 int i = ocr.LineNo + 1;
-                var nextLine =Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
+                var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
                 if (nextLine == null || nextLine.LineNo == 0)
                 {
-                   
-                    Global.CurrentReciept.Date =RefineToDate(Global.OcrLines.OrderByDescending(o => o.WeightedAsDateTitle).First().Content);
+
+                    Global.CurrentReciept.Date = RefineToDate(Global.OcrLines.OrderByDescending(o => o.WeightedAsDateTitle).First().Content);
                 }
                 else
                     GetReceiptDateValue(nextLine);
@@ -356,23 +490,23 @@ namespace BaiRocs.Services
         public static void GetReceiptTINValue(BaiOcrLine ocr)
         {
             var newContent = RefineToTIN(ocr.Content);
-           
+
             var length = newContent.Length;
             if (length > 5)
             {
-               
+
                 Global.CurrentReciept.Tax_Identification = newContent;
                 return;
-             
+
             }
             else
             {
                 int i = ocr.LineNo + 1;
                 var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
-                if (nextLine ==null || nextLine.LineNo == 0)
+                if (nextLine == null || nextLine.LineNo == 0)
                 {
 
-                    Global.CurrentReciept.Tax_Identification =RefineToTIN( Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorTINTitle).First().Content);
+                    Global.CurrentReciept.Tax_Identification = RefineToTIN(Global.OcrLines.OrderByDescending(o => o.WeightedAsVendorTINTitle).First().Content);
                 }
                 else
                     GetReceiptTINValue(nextLine);
@@ -383,14 +517,14 @@ namespace BaiRocs.Services
         }
         public static void GetReceiptTotalValue(BaiOcrLine ocr)
         {   //do 1st level
-            if(!GetReceiptTotalTopLevelOnly(ocr))            
+            if (!GetReceiptTotalTopLevelOnly(ocr))
             {
                 //check next
                 int i = ocr.LineNo + 1;
                 var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
                 if (nextLine == null || nextLine.LineNo == 0)
                 {
-                    Global.CurrentReciept.Amount =RefineToMoney( Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content);
+                    Global.CurrentReciept.Amount = RefineToMoney(Global.OcrLines.OrderByDescending(o => o.WeightedAsTotalTitle).First().Content);
                     return;
                 }
                 else
@@ -401,9 +535,9 @@ namespace BaiRocs.Services
                         //do by tender -change
                         var change = GetChangeValue();
                         var tender = GetTenderValue();
-                        if(change.HasValue && tender.HasValue)
+                        if (change.HasValue && tender.HasValue)
                         {
-                           var amount = (tender.Value - change.Value);
+                            var amount = (tender.Value - change.Value);
                             if (amount > 0)
                             {
                                 Global.CurrentReciept.Amount = amount.ToString();
@@ -461,11 +595,11 @@ namespace BaiRocs.Services
 
         public static double? GetChangeValue()
         {
-            double? result=null;
+            double? result = null;
             var change = Global.OcrLines.Where(l => l.ElectedAs == ReceiptParts.ChangeTitle.ToString()).FirstOrDefault();
-            if(change!=null && change.LineNo>0)
+            if (change != null && change.LineNo > 0)
             {
-                DigValue(change,ref result);
+                DigValue(change, ref result);
             }
             else
             {
@@ -473,14 +607,14 @@ namespace BaiRocs.Services
                 DigValue(change, ref result);
 
             }
-            return result;           
+            return result;
         }
 
         public static double? GetTenderValue()
         {
             double? result = null;
             var tender = Global.OcrLines.Where(l => l.ElectedAs == ReceiptParts.AmountTenderTiTle.ToString()).FirstOrDefault();
-            if ( tender!=null && tender.LineNo > 0)
+            if (tender != null && tender.LineNo > 0)
             {
                 DigValue(tender, ref result);
             }
@@ -517,19 +651,35 @@ namespace BaiRocs.Services
                     //throw;
                     //continue search
                 }
-              
+
             }
-           
-           int i = ocr.LineNo + 1;
-           var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
-           if (nextLine == null || nextLine.LineNo == 0)
-                {
-                    value = null;
-                    return;
-                }
-                else
-                    DigValue(nextLine,ref value);           
+
+            int i = ocr.LineNo + 1;
+            var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
+            if (nextLine == null || nextLine.LineNo == 0)
+            {
+                value = null;
+                return;
+            }
+            else
+                DigValue(nextLine, ref value);
 
         }
+
+        #region Break ocr in to unit
+        public static List<BaiOcrLine> RefinceOCRLines(List<BaiOcrLine> ocrLines)
+        {
+            List<BaiOcrLine> newLines = new List<BaiOcrLine>();
+
+            foreach (BaiOcrLine ocr in ocrLines)
+            {
+
+            }
+
+
+            return newLines;
+        }
+
+        #endregion
     }
 }

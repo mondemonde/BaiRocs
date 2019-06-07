@@ -10,9 +10,13 @@ namespace BaiRocs
 {
     static class Program
     {
-       
+
+        //debug mode
+
+
+        //_HACK MAIN safe to delete    
         [STAThread]
-        static void xMain(string[] args)
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -35,8 +39,8 @@ namespace BaiRocs
         //static Mutex mutex = new Mutex(true, "{8F6F0AC4-B9A1-45fd-A8CF-72F04E6BDE8F}");
         static Mutex mutex = new Mutex(true, "{5efbf2f3-4904-4799-9753-6d20320e26ad}");
 
-
-        static void Main(string[] args)
+        //release mode
+        static void xMain(string[] args)
         {
 
             //for (int i = 0; i < args.Length; i++)

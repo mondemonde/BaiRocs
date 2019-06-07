@@ -2,6 +2,7 @@
 using LogApplication;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,11 +25,12 @@ namespace BaiRocAgent
             Global.IdleCountSet = 5;
             Global.IdleCount = Global.IdleCountSet;
 
-           //var  _dirWatcher = new FileSystemWatcher(frontDir);
-           // _dirWatcher.IncludeSubdirectories = false;
-           // _dirWatcher.NotifyFilter = NotifyFilters.DirectoryName;
-           // _dirWatcher.EnableRaisingEvents = true;
-           // _dirWatcher.Created += FsWatcher_Created;
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+
+            Global.LogInfo("Running Version: " + version);
+
 
 
             //2.loop

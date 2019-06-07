@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -39,6 +40,13 @@ namespace BaiRocs
 
         private void MainFrm_Load(object sender, EventArgs e)
         {
+
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+
+            Global.LogInfo("Running Version: " + version);
+
             //STEP 1
             Global.MainWindow = this;
             backgroundWorker1.RunWorkerAsync();
@@ -132,6 +140,43 @@ namespace BaiRocs
 
         private void btnTest_Click(object sender, EventArgs e)
         {
+            //TestCmd();
+            List<BaiOcrLine> testLines = new List<BaiOcrLine>();
+            BaiOcrLine ocr = new BaiOcrLine
+            {
+
+                Content="Date:10/11/19 TIN:123456789 address: 154 bisalao st. Maligay Nov Q.C. Vendor: SEven eleven"
+
+            };
+            testLines.Add(ocr);
+
+            BaiOcrLine ocr1 = new BaiOcrLine
+            {
+
+                Content = "TOTAL:100 CHANGE:123 Cash: 500"
+
+            };
+
+            testLines.Add(ocr1);
+
+            List<BaiOcrLine> result = new List<BaiOcrLine>();
+            foreach(var thisOcr in testLines)
+            {
+                RocsTextService.RefineOcr(thisOcr,ref result);
+
+            }
+            int i = 0;
+            foreach(BaiOcrLine item in result)
+            {
+                i += 1;
+                item.LineNo = i;
+                Console.WriteLine(string.Format("{0}. {1}", item.LineNo.ToString(), item.Content));
+            }
+
+        }
+
+        void TestCmd()
+        {
             var p = new TestSampleCmdParam(btnTest);
             p.CommandName = "TestSample";
             p.SampleMessage = "Hello MOnd!!";
@@ -208,10 +253,41 @@ namespace BaiRocs
 
             FileService.CleanRootFolder();
             var imageFiles = FileService.FindImages();
+
+            //get last count
+            int iniRecord =  bindingSource1.Count;
+
             bindingSource1.DataSource = imageFiles.ToList();
             dgFiles.DataSource = bindingSource1;
 
+         
+            if (iniRecord<=0)
+            {
+                if (imageFiles.Count > 0)
+                {
+                    var stat = BaiRocService.GetEngineStat();
+                    stat.Status = "Scanning";
+                    stat.LastBatchCount = stat.MaxValue;
+                    stat.MaxValue = imageFiles.Count;
+                    stat.Value = 1;
+                    stat.LastStart = DateTime.Now;
+
+                    var imageFolder = Path.GetFileNameWithoutExtension(Global.CurrentImageFolder);
+                    stat.CurrentFolder = Global.CurrentUser + "/" + imageFolder; 
+                    
+                    BaiRocService.UpdateEngine(stat);
+                }
+            }
+            else
+            {
+                var stat = BaiRocService.GetEngineStat();
+                stat.Value += 1;
+                BaiRocService.UpdateEngine(stat);
+            }
+
+
             SetStatus(ProcessStatus.Ready);
+
 
 
         }
@@ -354,6 +430,25 @@ namespace BaiRocs
                 File.Delete(Global.CurrentImagePath);
                 bindingSource1.Remove(bindingSource1.Current);
 
+                //refine OCR
+                List<BaiOcrLine> result = new List<BaiOcrLine>();
+                foreach (var thisOcr in Global.OcrLines)
+                {
+                    RocsTextService.RefineOcr(thisOcr, ref result);
+
+                }
+                int i = 0;
+                foreach (BaiOcrLine item in result)
+                {
+                    i += 1;
+                    item.LineNo = i;
+                    Console.WriteLine(string.Format("{0}. {1}", item.LineNo.ToString(), item.Content));
+                }
+
+                Global.OcrLines = result;
+
+
+                /////////////////////
                 //update ocr list
                 bindingSourceOCR.DataSource = Global.OcrLines;
                 dgOCR.DataSource = bindingSourceOCR;
@@ -913,12 +1008,12 @@ namespace BaiRocs
             using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
             {
                 var q = db.TableReceipts.Where(r => r.UserFolder == Global.CurrentUser);
-                var list = q.OrderByDescending(r => r.Date).ToList();
+                var list = q.OrderBy(r => r.Created).ToList();
 
-                if(list.Count>0)
+                if (list.Count>0)
                 {
-                    var r = list.FirstOrDefault();
-                    csvName +=  r.Id.ToString();
+                    var cnt = list.Count;
+                    csvName +=  cnt.ToString();
                 }
 
                 this.bindingSourceCSV.DataSource = list;
@@ -933,6 +1028,20 @@ namespace BaiRocs
             var file =csvName + ".csv";
             var path = Path.Combine(folder, file);
             SaveDataGridViewToCSV(path);
+
+            var stat = BaiRocService.GetEngineStat();
+
+            if(stat.Value >=stat.MaxValue)
+            {
+                stat.Status = "Idle";
+                stat.LastBatchCount = stat.MaxValue;
+                stat.TotalConvert += stat.MaxValue;
+                stat.MaxValue = 0;
+                stat.Value = 0;
+                BaiRocService.UpdateEngine(stat);
+
+            }
+
 
 
         }
@@ -955,6 +1064,10 @@ namespace BaiRocs
                 //try
                 //{
                 btnSearch_Click(sender, e);
+
+               
+
+
                 btnChekFile_Click(sender, e);
                 if (Global.HasNothingToConvert == true)
                 {
@@ -996,6 +1109,11 @@ namespace BaiRocs
 
                 if (Global.HasNothingToConvert)
                 {
+                   var stat =  BaiRocService.GetEngineStat();
+                    stat.Status = "Idle";
+                    stat.MaxValue = 0;
+                    stat.Value = 0;
+                    BaiRocService.UpdateEngine(stat);
                     break;
                 }
 
@@ -1012,6 +1130,10 @@ namespace BaiRocs
                 btn3rdElection_Click(sender, e);
                 btnCreateReceipt_Click(sender, e);
                 btnDetails_Click(sender, e);
+
+                btnAuthenticatedSet_Click(sender, e);
+                btnUserSet_Click(sender, e);
+
                 btnSave_Click(sender, e);
                 btnExcel_Click(sender, e);               
                 
@@ -1071,6 +1193,109 @@ namespace BaiRocs
             //var file = "receipt.csv";
             //var path = Path.Combine(folder, file);
             //SaveDataGridViewToCSV(path);
+        }
+
+        private void btnAuthenticatedSet_Click(object sender, EventArgs e)
+        {
+            WaitForReady();
+            SetStatus(ProcessStatus.Election);
+            List<Receipt> table = new List<Receipt>();
+
+            var current = Global.CurrentReciept;
+            var tinId = current.Tax_Identification;
+            tinId = RocsTextService.RefineToPureNumber(tinId);
+
+
+            using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
+            {
+
+                var q = db.TableReceiptFixes.Where(r => r.IsAuthenticated == true).ToList();
+
+                List<ReceiptFix> listR = new List<ReceiptFix>();
+                foreach(var r in q)
+                {
+                    // && RocsTextService.RefineToPureNumber(r.Tax_Identification) == tinId
+                    if (RocsTextService.RefineToPureNumber(r.Tax_Identification) == tinId)
+                    {
+                        listR.Add(r);
+                    }
+                }
+
+                var setting = listR.OrderByDescending(r => r.Modified).ToList().FirstOrDefault();
+
+                if (listR.Count > 0)
+                {
+                    if ( setting.Id > 0)
+                    {
+                        current.Address = setting.Address;
+                        current.Comapany_Name = setting.Comapany_Name;
+                        current.Description = setting.Description;
+
+                    }
+
+                    Global.CurrentReciept = current;
+                }
+            }
+
+
+            table.Add(Global.CurrentReciept);
+            receiptBindingSource.DataSource = table;
+            dgReceipts.DataSource = receiptBindingSource;
+            this.bindingNavigatorReceipts.BindingSource = receiptBindingSource;
+
+            SetStatus(ProcessStatus.Ready);
+        }
+
+        private void btnUserSet_Click(object sender, EventArgs e)
+        {
+            WaitForReady();
+            SetStatus(ProcessStatus.Election);
+            List<Receipt> table = new List<Receipt>();
+            //string user = Path.GetFileName(Global.CurrentUserFolder);
+
+            var current = Global.CurrentReciept;
+            var tinId = current.Tax_Identification;
+            tinId =RocsTextService.RefineToPureNumber(tinId);
+
+            using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
+            {
+
+                var q = db.TableReceiptFixes.Where(r => r.UserFolder == Global.CurrentUser
+                && r.Modified.HasValue );
+
+
+
+                List<ReceiptFix> listR = new List<ReceiptFix>();
+                foreach (var r in q)
+                {
+                    // && RocsTextService.RefineToPureNumber(r.Tax_Identification) == tinId
+                    if (RocsTextService.RefineToPureNumber(r.Tax_Identification) == tinId)
+                    {
+                        listR.Add(r);
+                    }
+                }
+
+                if (listR.Count > 0)
+                {
+                    var setting = listR.OrderByDescending(r => r.Modified).ToList().FirstOrDefault();
+                    if ( setting.Id > 0)
+                    {
+                        current.Address = setting.Address;
+                        current.Comapany_Name = setting.Comapany_Name;
+                        current.Description = setting.Description;
+
+                    }
+                    Global.CurrentReciept = current;
+                }
+            }
+
+
+            table.Add(Global.CurrentReciept);
+            receiptBindingSource.DataSource = table;
+            dgReceipts.DataSource = receiptBindingSource;
+            this.bindingNavigatorReceipts.BindingSource = receiptBindingSource;
+
+            SetStatus(ProcessStatus.Ready);
         }
     }
 }

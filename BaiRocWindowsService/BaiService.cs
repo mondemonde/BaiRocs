@@ -36,6 +36,12 @@ namespace BaiRocWindowsService
 
             Global.IdleCount = Global.IdleCountSet;
 
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+
+            Global.LogInfo("Running Version: " + version);
+
 
 
         }

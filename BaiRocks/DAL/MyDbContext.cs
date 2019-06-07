@@ -15,7 +15,8 @@ namespace BaiRocs.DAL
         {
 
 
-            Database.SetInitializer<MyDBContext>(new DbInitializer2());
+            //Database.SetInitializer<MyDBContext>(new DbInitializer2());
+            Database.SetInitializer<MyDBContext>(null);
 
             //Database.SetInitializer<MyDbContext>(null);
             using (MyDBContext db = new MyDBContext())
@@ -23,10 +24,13 @@ namespace BaiRocs.DAL
         }
 
         public IDbSet<TableConfig> TableConfigs { get; set; }
-        public IDbSet<Receipt> TableReceipts { get; set; }
-        public IDbSet<ReceiptFix> TableReceiptFixes { get; set; }
+        //public IDbSet<Receipt> TableReceipts { get; set; }
+        //public IDbSet<ReceiptFix> TableReceiptFixes { get; set; }
+
         public IDbSet<WeightFactor> WeightFactors { get; set; }
         public IDbSet<WeightFactorForDetail> WeightFactorForDetails { get; set; }
+
+        public IDbSet<EngineStatus> TableStatus { get; set; }
 
 
 
@@ -46,12 +50,7 @@ namespace BaiRocs.DAL
 
                 });
 
-                context.TableReceipts.Add(new Receipt 
-                {
-                   //UserId=-1,
-                   
-
-                });
+              
 
                 //int length = 1000;
 
@@ -120,7 +119,7 @@ namespace BaiRocs.DAL
         {
 
 
-            Database.SetInitializer<MyDBContext>(new DbInitializer2());
+            Database.SetInitializer<MyReceiptOnlyContext>(null);
 
             //Database.SetInitializer<MyDbContext>(null);
             using (MyReceiptOnlyContext db = new MyReceiptOnlyContext())
@@ -134,25 +133,20 @@ namespace BaiRocs.DAL
 
 
 
-        public class DbInitializer1 : DropCreateDatabaseAlways<MyDBContext>
+        public class DbInitializer1 : DropCreateDatabaseAlways<MyReceiptOnlyContext>
         {
-            protected override void Seed(MyDBContext context)
+            protected override void Seed(MyReceiptOnlyContext context)
             {
                 //initialieze here...
-                context.TableConfigs.Add(new TableConfig
-                {
-                    BatchNo = 1,
-                    RecPerBatch = 10
+                //context.TableConfigs.Add(new TableConfig
+                //{
+                //    BatchNo = 1,
+                //    RecPerBatch = 10
 
 
-                });
+                //});
 
-                context.TableReceipts.Add(new Receipt
-                {
-                    //UserId=-1,
-
-
-                });
+            
 
               
                 base.Seed(context);
@@ -161,20 +155,11 @@ namespace BaiRocs.DAL
         }
 
 
-        public class DbInitializer2 : CreateDatabaseIfNotExists<MyDBContext>
+        public class DbInitializer2 : CreateDatabaseIfNotExists<MyReceiptOnlyContext>
         {
-            protected override void Seed(MyDBContext context)
+            protected override void Seed(MyReceiptOnlyContext context)
             {
-                //initialieze here...
-                context.TableConfigs.Add(new TableConfig
-                {
-                    //ApplicationName = "AIFS Project Manager",
-
-                    BatchNo = 1,
-                    RecPerBatch = 10
-
-
-                });
+                //initialieze here...               
 
                 //int length = 1000;
 

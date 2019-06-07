@@ -10,7 +10,7 @@ namespace BaiRocs.Models
     public class ReceiptFix : BaseModel
     {
          public int ReceiptId { get; set; }
-        //public string UserName { get; set; }
+        public string UserFolder { get; set; }
         public string Date { get; set; }
         public string Comapany_Name { get; set; }
         public string Tax_Identification { get; set; }
@@ -22,6 +22,8 @@ namespace BaiRocs.Models
         public string NameOfIndividual { get; set; }
         public string Project { get; set; }
         public string Amount { get; set; }
+
+        public bool IsAuthenticated { get; set; }
 
 
 

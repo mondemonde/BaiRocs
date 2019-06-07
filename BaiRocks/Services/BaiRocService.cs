@@ -1,4 +1,5 @@
 ﻿using BaiRocs.Common;
+using BaiRocs.DAL;
 using BaiRocs.Models;
 using BaiRocs.WF;
 using LogApplication.Common;
@@ -7,6 +8,7 @@ using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -181,6 +183,29 @@ namespace BaiRocs.Services
         //public List<string> RawList { get; set; }
         public List<BaiOcrLine> RawList { get; set; }
 
+
+
+        #endregion
+
+
+        #region Engin Status
+        public static EngineStatus GetEngineStat()
+        {
+            using (MyDBContext db = new MyDBContext())
+            {
+               return db.TableStatus.FirstOrDefault();               
+
+            }
+        }
+        public static void UpdateEngine(EngineStatus stat)
+        {
+            using (MyDBContext db = new MyDBContext())
+            {
+                 db.Entry(stat).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+        }
 
 
         #endregion

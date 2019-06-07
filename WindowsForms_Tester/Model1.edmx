@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ReceiptFixes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceiptId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Comapany_Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Tax_Identification" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Address" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Receipt_Attached" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Receipt_Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="BusinessReason" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NameOfIndividual" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Project" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="4000" />
+          <Property Name="IsAuthenticated" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Modified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Receipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserFolder" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Date" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Comapany_Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Tax_Identification" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Address" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Receipt_Attached" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Receipt_Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="BusinessReason" Type="nvarchar" MaxLength="4000" />
+          <Property Name="NameOfIndividual" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Project" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="4000" />
+          <Property Name="OcrLines" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Modified" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="ReceiptFixes" EntityType="Self.ReceiptFixes" store:Type="Tables" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipts" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ReceiptFix">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiptId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Comapany_Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Tax_Identification" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Receipt_Attached" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Receipt_Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessReason" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NameOfIndividual" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Project" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IsAuthenticated" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Modified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserFolder" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Comapany_Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Tax_Identification" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Receipt_Attached" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Receipt_Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessReason" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="NameOfIndividual" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Project" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="OcrLines" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Modified" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="ReceiptOnlyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ReceiptFixes" EntityType="Self.ReceiptFix" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipt" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ReceiptOnlyEntities">
+          <EntitySetMapping Name="ReceiptFixes">
+            <EntityTypeMapping TypeName="Model.ReceiptFix">
+              <MappingFragment StoreEntitySet="ReceiptFixes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Comapany_Name" ColumnName="Comapany_Name" />
+                <ScalarProperty Name="Tax_Identification" ColumnName="Tax_Identification" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Receipt_Attached" ColumnName="Receipt_Attached" />
+                <ScalarProperty Name="Receipt_Name" ColumnName="Receipt_Name" />
+                <ScalarProperty Name="BusinessReason" ColumnName="BusinessReason" />
+                <ScalarProperty Name="NameOfIndividual" ColumnName="NameOfIndividual" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsAuthenticated" ColumnName="IsAuthenticated" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="Model.Receipt">
+              <MappingFragment StoreEntitySet="Receipts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserFolder" ColumnName="UserFolder" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Comapany_Name" ColumnName="Comapany_Name" />
+                <ScalarProperty Name="Tax_Identification" ColumnName="Tax_Identification" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Receipt_Attached" ColumnName="Receipt_Attached" />
+                <ScalarProperty Name="Receipt_Name" ColumnName="Receipt_Name" />
+                <ScalarProperty Name="BusinessReason" ColumnName="BusinessReason" />
+                <ScalarProperty Name="NameOfIndividual" ColumnName="NameOfIndividual" />
+                <ScalarProperty Name="Project" ColumnName="Project" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="OcrLines" ColumnName="OcrLines" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
