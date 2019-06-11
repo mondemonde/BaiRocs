@@ -35,22 +35,22 @@
             this.dgCSV = new System.Windows.Forms.DataGridView();
             this.bindingNavigatorCSV = new System.Windows.Forms.BindingNavigator(this.components);
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton30 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator25 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTextBox7 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton31 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton32 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.txtCurrentUser = new System.Windows.Forms.TextBox();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.btnExcel = new System.Windows.Forms.Button();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton30 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton31 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton32 = new System.Windows.Forms.ToolStripButton();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.btnLoad = new System.Windows.Forms.Button();
-            this.txtCurrentUser = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.bindingSourceCSV = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPageCSV.SuspendLayout();
@@ -70,7 +70,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 450);
+            this.tabControl1.Size = new System.Drawing.Size(798, 448);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageCSV
@@ -82,7 +82,7 @@
             this.tabPageCSV.Location = new System.Drawing.Point(4, 25);
             this.tabPageCSV.Name = "tabPageCSV";
             this.tabPageCSV.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCSV.Size = new System.Drawing.Size(792, 421);
+            this.tabPageCSV.Size = new System.Drawing.Size(790, 419);
             this.tabPageCSV.TabIndex = 9;
             this.tabPageCSV.Text = "CSV";
             this.tabPageCSV.UseVisualStyleBackColor = true;
@@ -100,7 +100,7 @@
             this.dgCSV.ReadOnly = true;
             this.dgCSV.RowHeadersVisible = false;
             this.dgCSV.RowTemplate.Height = 24;
-            this.dgCSV.Size = new System.Drawing.Size(786, 188);
+            this.dgCSV.Size = new System.Drawing.Size(784, 186);
             this.dgCSV.TabIndex = 36;
             // 
             // bindingNavigatorCSV
@@ -121,14 +121,14 @@
             this.toolStripButton32,
             this.toolStripSeparator27,
             this.toolStripSeparator28});
-            this.bindingNavigatorCSV.Location = new System.Drawing.Point(3, 261);
+            this.bindingNavigatorCSV.Location = new System.Drawing.Point(3, 259);
             this.bindingNavigatorCSV.MoveFirstItem = this.toolStripButton29;
             this.bindingNavigatorCSV.MoveLastItem = this.toolStripButton32;
             this.bindingNavigatorCSV.MoveNextItem = this.toolStripButton31;
             this.bindingNavigatorCSV.MovePreviousItem = this.toolStripButton30;
             this.bindingNavigatorCSV.Name = "bindingNavigatorCSV";
             this.bindingNavigatorCSV.PositionItem = this.toolStripTextBox7;
-            this.bindingNavigatorCSV.Size = new System.Drawing.Size(786, 27);
+            this.bindingNavigatorCSV.Size = new System.Drawing.Size(784, 27);
             this.bindingNavigatorCSV.TabIndex = 38;
             this.bindingNavigatorCSV.Text = "bindingNavigator1";
             // 
@@ -138,79 +138,6 @@
             this.toolStripLabel7.Size = new System.Drawing.Size(45, 24);
             this.toolStripLabel7.Text = "of {0}";
             this.toolStripLabel7.ToolTipText = "Total number of items";
-            // 
-            // toolStripSeparator25
-            // 
-            this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripTextBox7
-            // 
-            this.toolStripTextBox7.AccessibleName = "Position";
-            this.toolStripTextBox7.AutoSize = false;
-            this.toolStripTextBox7.Name = "toolStripTextBox7";
-            this.toolStripTextBox7.Size = new System.Drawing.Size(65, 27);
-            this.toolStripTextBox7.Text = "0";
-            this.toolStripTextBox7.ToolTipText = "Current position";
-            // 
-            // toolStripSeparator26
-            // 
-            this.toolStripSeparator26.Name = "toolStripSeparator26";
-            this.toolStripSeparator26.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripSeparator27
-            // 
-            this.toolStripSeparator27.Name = "toolStripSeparator27";
-            this.toolStripSeparator27.Size = new System.Drawing.Size(6, 27);
-            // 
-            // toolStripSeparator28
-            // 
-            this.toolStripSeparator28.Name = "toolStripSeparator28";
-            this.toolStripSeparator28.Size = new System.Drawing.Size(6, 27);
-            // 
-            // groupBox15
-            // 
-            this.groupBox15.Controls.Add(this.txtCurrentUser);
-            this.groupBox15.Controls.Add(this.btnLoad);
-            this.groupBox15.Controls.Add(this.btnExcel);
-            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox15.Location = new System.Drawing.Point(3, 288);
-            this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(786, 130);
-            this.groupBox15.TabIndex = 37;
-            this.groupBox15.TabStop = false;
-            this.groupBox15.Text = "Search";
-            // 
-            // btnExcel
-            // 
-            this.btnExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExcel.Location = new System.Drawing.Point(576, 22);
-            this.btnExcel.Name = "btnExcel";
-            this.btnExcel.Size = new System.Drawing.Size(128, 29);
-            this.btnExcel.TabIndex = 29;
-            this.btnExcel.Text = "Create CSV";
-            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.BackColor = System.Drawing.Color.White;
-            this.groupBox16.Controls.Add(this.pictureBox8);
-            this.groupBox16.Controls.Add(this.label11);
-            this.groupBox16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox16.Location = new System.Drawing.Point(3, 3);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(786, 70);
-            this.groupBox16.TabIndex = 35;
-            this.groupBox16.TabStop = false;
-            // 
-            // label11
-            // 
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(24, 24);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(381, 35);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "CSV";
             // 
             // toolStripButton29
             // 
@@ -230,6 +157,26 @@
             this.toolStripButton30.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton30.Text = "Move previous";
             // 
+            // toolStripSeparator25
+            // 
+            this.toolStripSeparator25.Name = "toolStripSeparator25";
+            this.toolStripSeparator25.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripTextBox7
+            // 
+            this.toolStripTextBox7.AccessibleName = "Position";
+            this.toolStripTextBox7.AutoSize = false;
+            this.toolStripTextBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox7.Name = "toolStripTextBox7";
+            this.toolStripTextBox7.Size = new System.Drawing.Size(65, 27);
+            this.toolStripTextBox7.Text = "0";
+            this.toolStripTextBox7.ToolTipText = "Current position";
+            // 
+            // toolStripSeparator26
+            // 
+            this.toolStripSeparator26.Name = "toolStripSeparator26";
+            this.toolStripSeparator26.Size = new System.Drawing.Size(6, 27);
+            // 
             // toolStripButton31
             // 
             this.toolStripButton31.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -248,15 +195,37 @@
             this.toolStripButton32.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton32.Text = "Move last";
             // 
-            // pictureBox8
+            // toolStripSeparator27
             // 
-            this.pictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(709, 21);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(67, 39);
-            this.pictureBox8.TabIndex = 1;
-            this.pictureBox8.TabStop = false;
+            this.toolStripSeparator27.Name = "toolStripSeparator27";
+            this.toolStripSeparator27.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripSeparator28
+            // 
+            this.toolStripSeparator28.Name = "toolStripSeparator28";
+            this.toolStripSeparator28.Size = new System.Drawing.Size(6, 27);
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.txtCurrentUser);
+            this.groupBox15.Controls.Add(this.btnLoad);
+            this.groupBox15.Controls.Add(this.btnExcel);
+            this.groupBox15.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox15.Location = new System.Drawing.Point(3, 286);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(784, 130);
+            this.groupBox15.TabIndex = 37;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Search";
+            // 
+            // txtCurrentUser
+            // 
+            this.txtCurrentUser.Location = new System.Drawing.Point(235, 22);
+            this.txtCurrentUser.Name = "txtCurrentUser";
+            this.txtCurrentUser.Size = new System.Drawing.Size(291, 22);
+            this.txtCurrentUser.TabIndex = 31;
+            this.txtCurrentUser.Text = "rgalvez";
+            this.txtCurrentUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnLoad
             // 
@@ -268,20 +237,52 @@
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // txtCurrentUser
+            // btnExcel
             // 
-            this.txtCurrentUser.Location = new System.Drawing.Point(235, 22);
-            this.txtCurrentUser.Name = "txtCurrentUser";
-            this.txtCurrentUser.Size = new System.Drawing.Size(291, 22);
-            this.txtCurrentUser.TabIndex = 31;
-            this.txtCurrentUser.Text = "rgalvez";
-            this.txtCurrentUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.btnExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExcel.Location = new System.Drawing.Point(576, 22);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Size = new System.Drawing.Size(128, 29);
+            this.btnExcel.TabIndex = 29;
+            this.btnExcel.Text = "Create CSV";
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.BackColor = System.Drawing.Color.White;
+            this.groupBox16.Controls.Add(this.pictureBox8);
+            this.groupBox16.Controls.Add(this.label11);
+            this.groupBox16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox16.Location = new System.Drawing.Point(3, 3);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(784, 70);
+            this.groupBox16.TabIndex = 35;
+            this.groupBox16.TabStop = false;
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
+            this.pictureBox8.Location = new System.Drawing.Point(707, 21);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(67, 39);
+            this.pictureBox8.TabIndex = 1;
+            this.pictureBox8.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(24, 24);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(381, 35);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "CSV";
             // 
             // CSVForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(798, 448);
             this.Controls.Add(this.tabControl1);
             this.Name = "CSVForm";
             this.Text = "CSVForm";

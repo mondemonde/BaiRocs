@@ -185,7 +185,7 @@ namespace BaiRocs.Services
                     // first = splitAll[1];
                     hashResult.Add(head);
                 }
-                else if(splitAll.Count==2)
+                else if (splitAll.Count == 2)
                 {
                     hashResult.Add(splitAll[0]);
                     hashResult.Add(splitAll[1]);
@@ -206,17 +206,18 @@ namespace BaiRocs.Services
                     hashResult.Add(head);
                 }
 
-            }       
+            }
 
-            foreach(string l in hashResult)
+            foreach (string l in hashResult)
             {
-                BaiOcrLine ocr1 = new BaiOcrLine {
+                BaiOcrLine ocr1 = new BaiOcrLine
+                {
                     Content = l
                 };
                 newLines.Add(ocr1);
                 Console.WriteLine(l);
             }
-           
+
         }
 
         private static string NewMethod(List<string> splitAll, string content, int i)
@@ -282,11 +283,14 @@ namespace BaiRocs.Services
             return newContent;
         }
 
+        //[Obsolete]
         public static string RefineToDate(string content)
         {
             content = content.ToLower().Replace("date", string.Empty);
             content = content.ToLower().Replace(":", string.Empty);
             string newContent = string.Empty;
+
+
 
             if (content.Contains('/'))
             {
@@ -297,13 +301,13 @@ namespace BaiRocs.Services
                         newContent += c;
                     }
 
-                    // 01/12/2019
+                    //01/12/19
                     var year = DateTime.Now.Date.Year;
                     string strYear = year.ToString();
-                    strYear = strYear.Substring(2, 2);
+                    strYear = "/" + strYear.Substring(2, 2);
 
                     var length = newContent.Length;
-                    if (length >= 8)
+                    if (length >= 6)
                     {
                         if (newContent.EndsWith(strYear))
                             return newContent;
@@ -314,11 +318,10 @@ namespace BaiRocs.Services
             {
                 foreach (char c in content)
                 {
-                    if (char.IsNumber(c) || c == '-')
-                    {
-                        newContent += c;
-                    }
-
+                    //if (char.IsNumber(c) || c == '-')
+                    //{
+                    //    newContent += c;
+                    //}
                     // 01/12/2019
                     var year = DateTime.Now.Date.Year;
                     string strYear = year.ToString();
@@ -335,6 +338,31 @@ namespace BaiRocs.Services
 
 
             return newContent;
+        }
+
+
+        public static string RefineToDate2(string content)
+        {
+            content = content.ToLower().Replace("date", string.Empty);
+            content = content.ToLower().Replace(":", string.Empty);
+            string newContent = string.Empty;
+
+            var year = DateTime.Now.Year.ToString();
+
+            var firstContent = content.IndexOf(year);
+            if (firstContent > 8)
+            {
+                return content.Substring(0, firstContent + 1);
+            }
+            else
+            {
+                return RefineToDate(content);
+            }
+
+
+
+
+            // return newContent;
         }
 
         public static string RefineToVendorName(string content)
@@ -358,7 +386,7 @@ namespace BaiRocs.Services
                 return string.Empty;
 
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-            title =  textInfo.ToTitleCase(title.ToLower().Trim());
+            title = textInfo.ToTitleCase(title.ToLower().Trim());
             return title;
         }
 
@@ -420,7 +448,7 @@ namespace BaiRocs.Services
 
             finally
             {
-              vendor =  RocsTextService.RefineToVendorName(vendor);
+                vendor = RocsTextService.RefineToVendorName(vendor);
             }
 
             Global.CurrentReciept.Comapany_Name = vendor;
@@ -453,9 +481,10 @@ namespace BaiRocs.Services
                 address = Refine(address);
             }
 
-            Global.CurrentReciept.Address =RocsTextService.FormatToProperCasing(address);
+            Global.CurrentReciept.Address = RocsTextService.FormatToProperCasing(address);
         }
 
+        [Obsolete]
         public static void GetReceiptDateValue(BaiOcrLine ocr)
         {
             var newContent = RefineToDate(ocr.Content);
@@ -487,6 +516,154 @@ namespace BaiRocs.Services
 
 
         }
+
+
+        public static void GetReceiptDateValue(int ocrNo)
+        {
+            //get next line
+            int i = ocrNo + 1;
+            var nextLine = Global.OcrLines.Where(o => o.LineNo == i).FirstOrDefault();
+            if (nextLine == null || nextLine.LineNo == 0)
+            {
+                //todo what to do when none found
+                //var ocr = Global.OcrLines.OrderByDescending(o => o.WeightedAsDateTitle).First();
+                //nextLine = Global.OcrLines.Where(o => o.LineNo == ocr.LineNo + 1).FirstOrDefault();
+                //Global.CurrentReciept.Date = nextLine.Content;
+                GetDateByYear();
+            }
+            else
+            //GetReceiptDateValue(nextLine);
+            {
+                var newContent = RefineToDate2(nextLine.Content);
+                var year = DateTime.Now.Date.Year;
+                string strYear = year.ToString();
+                var strYear2 = strYear.Substring(2, 2);
+
+                var length = newContent.Length;
+                if (length >= 8)
+                {
+                    if (newContent.EndsWith(strYear))
+                    {
+                        Global.CurrentReciept.Date = newContent;
+                    }
+                    else if (newContent.EndsWith("/" + strYear2))
+                    {
+                        Global.CurrentReciept.Date = newContent;
+
+                    }
+                }
+                else
+                {
+                    GetReceiptDateValue(i);
+                };
+            }
+        }
+
+        public static void GetDateByYear()
+        {
+            var year = DateTime.Now.Date.Year;
+            string strYear = year.ToString();
+
+
+            foreach (var ocr in Global.OcrLines)
+            {
+
+                if (ocr.Content.Contains(strYear))
+                {
+                    var split = ocr.Content.Split().ToList();
+                    foreach(string s in split)
+                    {
+                        if (s.Contains(strYear))
+                        {
+                            Global.CurrentReciept.Date = s;
+                            return;
+                        }
+
+                    }
+
+
+                }
+            }
+
+           if(string.IsNullOrEmpty(Global.CurrentReciept.Date))
+            {
+                var y2 = "/" + strYear.Substring(2, 2);
+                foreach (var ocr in Global.OcrLines)
+                {                  
+
+                    if (ocr.Content.Contains(y2))
+                    {
+                        var split = ocr.Content.Split().ToList();
+                        foreach (string s in split)
+                        {
+                            if (s.Contains(y2))
+                            {
+                                Global.CurrentReciept.Date = s;
+                                return;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(Global.CurrentReciept.Date))
+            {
+                var y2 = "-" + strYear.Substring(2, 2);
+
+                foreach (var ocr in Global.OcrLines)
+                {                 
+
+                    if (ocr.Content.Contains(y2))
+                    {
+                        var split = ocr.Content.Split().ToList();
+                        foreach (string s in split)
+                        {
+                            if (s.Contains(y2))
+                            {
+                                Global.CurrentReciept.Date = s;
+                                return;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+
+        public static void GetAmountByDifference()
+        {
+
+            var changeTitle = Global.OcrLines.OrderByDescending(l => l.WeightedAsChangeTitle).FirstOrDefault();
+            if (changeTitle != null)
+            {
+                var TenderTitle = Global.OcrLines.OrderByDescending(l => l.WeightedAsTenderTitle).FirstOrDefault();
+                if (TenderTitle != null)
+                {
+                    //do by tender -change
+                    var change = GetChangeValue();
+                    var tender = GetTenderValue();
+                    if (change.HasValue && tender.HasValue)
+                    {
+                        var amount = (tender.Value - change.Value);
+                        if (amount > 0)
+                        {
+                            Global.CurrentReciept.Amount = amount.ToString();
+                            return;
+                        }
+
+                    }
+                }
+
+
+
+            }
+        }
+
+
         public static void GetReceiptTINValue(BaiOcrLine ocr)
         {
             var newContent = RefineToTIN(ocr.Content);
@@ -532,19 +709,8 @@ namespace BaiRocs.Services
                     //do 2nd level
                     if (!GetReceiptTotalTopLevelOnly(nextLine))
                     {
-                        //do by tender -change
-                        var change = GetChangeValue();
-                        var tender = GetTenderValue();
-                        if (change.HasValue && tender.HasValue)
-                        {
-                            var amount = (tender.Value - change.Value);
-                            if (amount > 0)
-                            {
-                                Global.CurrentReciept.Amount = amount.ToString();
-                                return;
-                            }
-
-                        }
+                        
+                        GetReceiptTotalValue(nextLine);
                     }
                 }
                 //if not found dig more...

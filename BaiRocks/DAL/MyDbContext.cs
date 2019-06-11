@@ -30,7 +30,7 @@ namespace BaiRocs.DAL
         public IDbSet<WeightFactor> WeightFactors { get; set; }
         public IDbSet<WeightFactorForDetail> WeightFactorForDetails { get; set; }
 
-        public IDbSet<EngineStatus> TableStatus { get; set; }
+        //public IDbSet<EngineStatus> TableStatus { get; set; }
 
 
 

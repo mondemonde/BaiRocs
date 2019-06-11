@@ -1,6 +1,7 @@
 ﻿using BaiRocs.Common;
 using BaiRocs.DAL;
 using BaiRocs.Models;
+using BaiRocs.WF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace BaiRocs.Policy
 {
-   public static class OcrPolicy
+    public static class OcrPolicy
     {
-        public static void AssertAsVendorName(ref BaiOcrLine  ocrLine)
+        public static void AssertAsVendorName(ref BaiOcrLine ocrLine)
         {
             var dim = ReceiptParts.VendorName.ToString();
             using (MyDBContext db = new MyDBContext())
@@ -19,7 +20,7 @@ namespace BaiRocs.Policy
                 var wfactors = db.WeightFactors.ToList();
                 var factors = wfactors.Where(f => f.Dimension == dim);
 
-                foreach(var f in factors)
+                foreach (var f in factors)
                 {
                     if (ocrLine.Content.ToLower().Contains(f.keyWord.ToLower()))
                     {
@@ -31,16 +32,22 @@ namespace BaiRocs.Policy
             }
 
             if (ocrLine.LineNo < 3)
-                ocrLine.WeightedAsVendorName += 3;         
-          
+                ocrLine.WeightedAsVendorName += 3;
 
-            if(ocrLine.PercentNumber<10)
+
+            if (ocrLine.PercentNumber < 10)
             {
                 ocrLine.WeightedAsVendorName += 3;
             }
 
+            //add weight by line
+            if (ocrLine.WeightedAsVendorName > 2)
+            {
+                var maxLine = Global.OcrLines.Count;
+                var weightLine = maxLine - ocrLine.LineNo;
+                ocrLine.WeightedAsVendorName += weightLine;
+            }
 
-           
         }
 
         public static void AssertAsVendorTINtitle(ref BaiOcrLine ocrLine)
@@ -64,8 +71,8 @@ namespace BaiRocs.Policy
 
 
             if (ocrLine.LineNo >= 3 && ocrLine.LineNo <= 5)
-                ocrLine.WeightedAsVendorTINTitle += 2;         
-         
+                ocrLine.WeightedAsVendorTINTitle += 2;
+
         }
 
         public static void AssertAsDateTitle(ref BaiOcrLine ocrLine)
@@ -83,29 +90,38 @@ namespace BaiRocs.Policy
                         ocrLine.WeightedAsDateTitle += f.Weight;
                     }
 
-                }               
+                }
 
-            }
-            //look for 11/11/11
-            if (ocrLine.PercentNumber > 50)
+            }          
+
+            //do not for 11/11/11
+            if (ocrLine.PercentNumber == 0)
             {
                 ocrLine.WeightedAsDateTitle += 1;
             }
             if (ocrLine.Content.Contains("/"))
             {
-                ocrLine.WeightedAsDateTitle += 1;
+                ocrLine.WeightedAsDateTitle -= 1;
             }
 
             var y = DateTime.Now.Year.ToString();
             if (ocrLine.Content.Contains(y))
             {
-                ocrLine.WeightedAsDateTitle += 2;
+                ocrLine.WeightedAsDateTitle -= 2;
             }
 
             var y2 = y.Substring(2, 2);
             if (ocrLine.Content.Contains(y2))
             {
-                ocrLine.WeightedAsDateTitle += 1;
+                ocrLine.WeightedAsDateTitle -= 1;
+            }
+
+            //add weight by line
+            if (ocrLine.WeightedAsDateTitle > 2)
+            {
+                var maxLine = Global.OcrLines.Count;
+                var weightLine = maxLine - ocrLine.LineNo;
+                ocrLine.WeightedAsDateTitle += weightLine;
             }
 
         }
@@ -129,6 +145,14 @@ namespace BaiRocs.Policy
 
             }
 
+            //add weight by line
+            if (ocrLine.WeightedAsAddress > 2)
+            {
+                var maxLine = Global.OcrLines.Count;
+                var weightLine = maxLine - ocrLine.LineNo;
+                ocrLine.WeightedAsAddress += weightLine;
+            }
+
             if (ocrLine.LineNo < 3)
                 ocrLine.WeightedAsAddress += 3;
 
@@ -149,6 +173,7 @@ namespace BaiRocs.Policy
             if (split.Length > 3)
                 ocrLine.WeightedAsAddress += 2;
 
+          
 
 
         }
@@ -171,7 +196,7 @@ namespace BaiRocs.Policy
                 }
 
             }
-            
+
 
 
         }

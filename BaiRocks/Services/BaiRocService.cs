@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace BaiRocs.Services
 {
-   public class BaiRocService
+    public class BaiRocService
     {
         // subscriptionKey = "0123456789abcdef0123456789ABCDEF"
         private string subscriptionKey = Global.MainWindow.MyConfig.GetValue("AzureOCRKey"); // @"a79807f94b604d38acb42a596cbd4adb";
@@ -34,7 +34,7 @@ namespace BaiRocs.Services
 
         private const int numberOfCharsInOperationId = 36;
 
-       public void ReadImage( string localImagePath)
+        public void ReadImage(string localImagePath)
         {
 
             RawList = new List<BaiOcrLine>();
@@ -57,14 +57,14 @@ namespace BaiRocs.Services
             Console.WriteLine("Images being analyzed ...");
             //var t1 = ExtractRemoteTextAsync(computerVision, remoteImageUrl);
             var t2 = ExtractLocalTextAsync(computerVision, localImagePath);
-           
+
 
             //Task.WhenAll(t1, t2).Wait(5000);
             Task.WhenAll(t2).Wait(5000);
         }
 
         // Read text from a remote image
-        private  async Task ExtractRemoteTextAsync(
+        private async Task ExtractRemoteTextAsync(
             ComputerVisionClient computerVision, string imageUrl)
         {
             if (!Uri.IsWellFormedUriString(imageUrl, UriKind.Absolute))
@@ -83,7 +83,7 @@ namespace BaiRocs.Services
         }
 
         // Recognize text from a local image
-        private  async Task ExtractLocalTextAsync(
+        private async Task ExtractLocalTextAsync(
             ComputerVisionClient computerVision, string imagePath)
         {
             if (!File.Exists(imagePath))
@@ -111,7 +111,7 @@ namespace BaiRocs.Services
                     //Thread.Sleep(100);
                     OnReadDone?.Invoke(err, EventArgs.Empty);
                 }
-              
+
             }
 
             //DO FILTER
@@ -119,7 +119,7 @@ namespace BaiRocs.Services
         }
 
         // Retrieve the recognized text
-        private  async Task GetTextAsync(
+        private async Task GetTextAsync(
             ComputerVisionClient computerVision, string operationLocation)
         {
             try
@@ -178,7 +178,7 @@ namespace BaiRocs.Services
 
         }
 
-        public event EventHandler OnReadDone; 
+        public event EventHandler OnReadDone;
         #region TEXT ANALISIS
         //public List<string> RawList { get; set; }
         public List<BaiOcrLine> RawList { get; set; }
@@ -189,22 +189,51 @@ namespace BaiRocs.Services
 
 
         #region Engin Status
-        public static EngineStatus GetEngineStat()
+        public static TableStatu GetEngineStat()
         {
-            using (MyDBContext db = new MyDBContext())
+            try
             {
-               return db.TableStatus.FirstOrDefault();               
+                using (ServerEntities db = new ServerEntities())
+                {
+                    return db.TableStatus.FirstOrDefault();
 
+                }
             }
+            catch (Exception)
+            {
+                return new TableStatu()
+                {
+                    CurrentFolder = string.Empty,
+                    Id = 1,
+                    LastBatchCount = 0,
+                    LastStart = DateTime.Now,
+                    MaxValue = 0,
+                    Value = 0,
+                    Status = string.Empty,
+                    TotalConvert = 0
+
+                };
+                // throw;
+            }
+
         }
-        public static void UpdateEngine(EngineStatus stat)
+        public static void UpdateEngine(TableStatu stat)
         {
-            using (MyDBContext db = new MyDBContext())
+            try
             {
-                 db.Entry(stat).State = EntityState.Modified;
-                db.SaveChanges();
+                using (ServerEntities db = new ServerEntities())
+                {
+                    db.Entry(stat).State = EntityState.Modified;
+                    db.SaveChanges();
 
+                }
             }
+            catch (Exception err)
+            {
+                Global.LogError(err);
+                // throw;
+            }
+
         }
 
 

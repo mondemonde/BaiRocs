@@ -120,6 +120,18 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabResult = new System.Windows.Forms.TabPage();
             this.dgReceipts = new System.Windows.Forms.DataGridView();
+            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.comapanyNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.taxIdentificationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.receiptAttachedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.receiptNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.businessReasonDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameOfIndividualDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.projectDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.receiptBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bindingNavigatorReceipts = new System.Windows.Forms.BindingNavigator(this.components);
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
@@ -144,6 +156,17 @@
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageCSV = new System.Windows.Forms.TabPage();
             this.dgCSV = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingNavigatorCSV = new System.Windows.Forms.BindingNavigator(this.components);
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
@@ -220,29 +243,6 @@
             this.bindingSourceSigma = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourceElect1 = new System.Windows.Forms.BindingSource(this.components);
             this.bindingSourceCSV = new System.Windows.Forms.BindingSource(this.components);
-            this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.comapanyNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.taxIdentificationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.receiptAttachedDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.receiptNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.businessReasonDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameOfIndividualDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.projectDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.receiptBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip.SuspendLayout();
             this.tabAll.SuspendLayout();
             this.tabSearch.SuspendLayout();
@@ -276,6 +276,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tabResult.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgReceipts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorReceipts)).BeginInit();
             this.bindingNavigatorReceipts.SuspendLayout();
             this.groupBox11.SuspendLayout();
@@ -310,7 +311,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceSigma)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceElect1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCSV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // backgroundWorker1
@@ -325,11 +325,11 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel4,
             this.ssMsg});
-            this.statusStrip.Location = new System.Drawing.Point(0, 425);
+            this.statusStrip.Location = new System.Drawing.Point(0, 423);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStrip.Size = new System.Drawing.Size(800, 25);
+            this.statusStrip.Size = new System.Drawing.Size(798, 25);
             this.statusStrip.TabIndex = 9;
             this.statusStrip.Text = "statusStrip2";
             // 
@@ -370,7 +370,7 @@
             this.tabAll.Location = new System.Drawing.Point(0, 0);
             this.tabAll.Name = "tabAll";
             this.tabAll.SelectedIndex = 0;
-            this.tabAll.Size = new System.Drawing.Size(800, 425);
+            this.tabAll.Size = new System.Drawing.Size(798, 423);
             this.tabAll.TabIndex = 13;
             // 
             // tabSearch
@@ -382,7 +382,7 @@
             this.tabSearch.Location = new System.Drawing.Point(4, 25);
             this.tabSearch.Name = "tabSearch";
             this.tabSearch.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSearch.Size = new System.Drawing.Size(792, 396);
+            this.tabSearch.Size = new System.Drawing.Size(790, 394);
             this.tabSearch.TabIndex = 0;
             this.tabSearch.Text = "Search";
             this.tabSearch.UseVisualStyleBackColor = true;
@@ -397,7 +397,7 @@
             this.dgFiles.Name = "dgFiles";
             this.dgFiles.ReadOnly = true;
             this.dgFiles.RowTemplate.Height = 24;
-            this.dgFiles.Size = new System.Drawing.Size(786, 163);
+            this.dgFiles.Size = new System.Drawing.Size(784, 161);
             this.dgFiles.TabIndex = 22;
             // 
             // bindingNavigator1
@@ -419,14 +419,14 @@
             this.toolStripButton5,
             this.toolStripSeparator3,
             this.toolStripSeparator4});
-            this.bindingNavigator1.Location = new System.Drawing.Point(3, 236);
+            this.bindingNavigator1.Location = new System.Drawing.Point(3, 234);
             this.bindingNavigator1.MoveFirstItem = this.toolStripButton2;
             this.bindingNavigator1.MoveLastItem = this.toolStripButton5;
             this.bindingNavigator1.MoveNextItem = this.toolStripButton4;
             this.bindingNavigator1.MovePreviousItem = this.toolStripButton3;
             this.bindingNavigator1.Name = "bindingNavigator1";
             this.bindingNavigator1.PositionItem = this.toolStripTextBox1;
-            this.bindingNavigator1.Size = new System.Drawing.Size(786, 27);
+            this.bindingNavigator1.Size = new System.Drawing.Size(784, 27);
             this.bindingNavigator1.TabIndex = 23;
             this.bindingNavigator1.Text = "bindingNavigator1";
             // 
@@ -511,9 +511,9 @@
             this.groupBox4.Controls.Add(this.btnChekFile);
             this.groupBox4.Controls.Add(this.btnSearch);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox4.Location = new System.Drawing.Point(3, 263);
+            this.groupBox4.Location = new System.Drawing.Point(3, 261);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(786, 130);
+            this.groupBox4.Size = new System.Drawing.Size(784, 130);
             this.groupBox4.TabIndex = 24;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Action";
@@ -580,7 +580,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(786, 70);
+            this.groupBox3.Size = new System.Drawing.Size(784, 70);
             this.groupBox3.TabIndex = 21;
             this.groupBox3.TabStop = false;
             // 
@@ -588,7 +588,7 @@
             // 
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(705, 18);
+            this.pictureBox2.Location = new System.Drawing.Point(703, 18);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(43, 40);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -613,7 +613,7 @@
             this.tabOcrLines.Location = new System.Drawing.Point(4, 25);
             this.tabOcrLines.Name = "tabOcrLines";
             this.tabOcrLines.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOcrLines.Size = new System.Drawing.Size(792, 396);
+            this.tabOcrLines.Size = new System.Drawing.Size(790, 394);
             this.tabOcrLines.TabIndex = 1;
             this.tabOcrLines.Text = "OCR";
             this.tabOcrLines.UseVisualStyleBackColor = true;
@@ -627,7 +627,7 @@
             this.dgOCR.Name = "dgOCR";
             this.dgOCR.ReadOnly = true;
             this.dgOCR.RowTemplate.Height = 24;
-            this.dgOCR.Size = new System.Drawing.Size(786, 163);
+            this.dgOCR.Size = new System.Drawing.Size(784, 161);
             this.dgOCR.TabIndex = 0;
             // 
             // groupBox2
@@ -638,7 +638,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(786, 70);
+            this.groupBox2.Size = new System.Drawing.Size(784, 70);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             // 
@@ -646,7 +646,7 @@
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(709, 21);
+            this.pictureBox1.Location = new System.Drawing.Point(707, 21);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(67, 39);
             this.pictureBox1.TabIndex = 1;
@@ -680,14 +680,14 @@
             this.bindingNavigatorSeparator2,
             this.saveToolStripButton,
             this.toolStripSeparator});
-            this.BindingNavigatorOcr.Location = new System.Drawing.Point(3, 236);
+            this.BindingNavigatorOcr.Location = new System.Drawing.Point(3, 234);
             this.BindingNavigatorOcr.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.BindingNavigatorOcr.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.BindingNavigatorOcr.MoveNextItem = this.bindingNavigatorMoveNextItem;
             this.BindingNavigatorOcr.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.BindingNavigatorOcr.Name = "BindingNavigatorOcr";
             this.BindingNavigatorOcr.PositionItem = this.bindingNavigatorPositionItem;
-            this.BindingNavigatorOcr.Size = new System.Drawing.Size(786, 27);
+            this.BindingNavigatorOcr.Size = new System.Drawing.Size(784, 27);
             this.BindingNavigatorOcr.TabIndex = 2;
             this.BindingNavigatorOcr.Text = "bindingNavigatorOCR";
             // 
@@ -776,9 +776,9 @@
             // 
             this.groupBox1.Controls.Add(this.btnWeight);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox1.Location = new System.Drawing.Point(3, 263);
+            this.groupBox1.Location = new System.Drawing.Point(3, 261);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(786, 130);
+            this.groupBox1.Size = new System.Drawing.Size(784, 130);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "OCR Lines";
@@ -802,7 +802,7 @@
             this.tabSigma.Location = new System.Drawing.Point(4, 25);
             this.tabSigma.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabSigma.Name = "tabSigma";
-            this.tabSigma.Size = new System.Drawing.Size(792, 396);
+            this.tabSigma.Size = new System.Drawing.Size(790, 394);
             this.tabSigma.TabIndex = 4;
             this.tabSigma.Text = "Sigma";
             this.tabSigma.UseVisualStyleBackColor = true;
@@ -816,7 +816,7 @@
             this.dgSigma.Name = "dgSigma";
             this.dgSigma.ReadOnly = true;
             this.dgSigma.RowTemplate.Height = 24;
-            this.dgSigma.Size = new System.Drawing.Size(792, 169);
+            this.dgSigma.Size = new System.Drawing.Size(790, 167);
             this.dgSigma.TabIndex = 24;
             // 
             // bindingNavigatorSigma
@@ -838,14 +838,14 @@
             this.toolStripSeparator11,
             this.toolStripButton14,
             this.toolStripSeparator12});
-            this.bindingNavigatorSigma.Location = new System.Drawing.Point(0, 239);
+            this.bindingNavigatorSigma.Location = new System.Drawing.Point(0, 237);
             this.bindingNavigatorSigma.MoveFirstItem = this.toolStripButton10;
             this.bindingNavigatorSigma.MoveLastItem = this.toolStripButton13;
             this.bindingNavigatorSigma.MoveNextItem = this.toolStripButton12;
             this.bindingNavigatorSigma.MovePreviousItem = this.toolStripButton11;
             this.bindingNavigatorSigma.Name = "bindingNavigatorSigma";
             this.bindingNavigatorSigma.PositionItem = this.toolStripTextBox3;
-            this.bindingNavigatorSigma.Size = new System.Drawing.Size(792, 27);
+            this.bindingNavigatorSigma.Size = new System.Drawing.Size(790, 27);
             this.bindingNavigatorSigma.TabIndex = 26;
             this.bindingNavigatorSigma.Text = "bindingNavigator1";
             // 
@@ -934,9 +934,9 @@
             // 
             this.groupBox8.Controls.Add(this.btnSigma);
             this.groupBox8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox8.Location = new System.Drawing.Point(0, 266);
+            this.groupBox8.Location = new System.Drawing.Point(0, 264);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(792, 130);
+            this.groupBox8.Size = new System.Drawing.Size(790, 130);
             this.groupBox8.TabIndex = 25;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "OCR Lines";
@@ -945,7 +945,7 @@
             // 
             this.btnSigma.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSigma.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSigma.Location = new System.Drawing.Point(85, 38);
+            this.btnSigma.Location = new System.Drawing.Point(83, 38);
             this.btnSigma.Name = "btnSigma";
             this.btnSigma.Size = new System.Drawing.Size(213, 29);
             this.btnSigma.TabIndex = 25;
@@ -960,7 +960,7 @@
             this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox7.Location = new System.Drawing.Point(0, 0);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(792, 70);
+            this.groupBox7.Size = new System.Drawing.Size(790, 70);
             this.groupBox7.TabIndex = 23;
             this.groupBox7.TabStop = false;
             // 
@@ -968,7 +968,7 @@
             // 
             this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(715, 21);
+            this.pictureBox4.Location = new System.Drawing.Point(713, 21);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(67, 39);
             this.pictureBox4.TabIndex = 1;
@@ -992,7 +992,7 @@
             this.tabFirstElection.Location = new System.Drawing.Point(4, 25);
             this.tabFirstElection.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabFirstElection.Name = "tabFirstElection";
-            this.tabFirstElection.Size = new System.Drawing.Size(792, 396);
+            this.tabFirstElection.Size = new System.Drawing.Size(790, 394);
             this.tabFirstElection.TabIndex = 5;
             this.tabFirstElection.Text = "Election";
             this.tabFirstElection.UseVisualStyleBackColor = true;
@@ -1006,7 +1006,7 @@
             this.dgElection1.Name = "dgElection1";
             this.dgElection1.ReadOnly = true;
             this.dgElection1.RowTemplate.Height = 24;
-            this.dgElection1.Size = new System.Drawing.Size(792, 169);
+            this.dgElection1.Size = new System.Drawing.Size(790, 167);
             this.dgElection1.TabIndex = 28;
             // 
             // bindingNavigatorElect1
@@ -1028,14 +1028,14 @@
             this.toolStripSeparator15,
             this.toolStripButton19,
             this.toolStripSeparator16});
-            this.bindingNavigatorElect1.Location = new System.Drawing.Point(0, 239);
+            this.bindingNavigatorElect1.Location = new System.Drawing.Point(0, 237);
             this.bindingNavigatorElect1.MoveFirstItem = this.toolStripButton15;
             this.bindingNavigatorElect1.MoveLastItem = this.toolStripButton18;
             this.bindingNavigatorElect1.MoveNextItem = this.toolStripButton17;
             this.bindingNavigatorElect1.MovePreviousItem = this.toolStripButton16;
             this.bindingNavigatorElect1.Name = "bindingNavigatorElect1";
             this.bindingNavigatorElect1.PositionItem = this.toolStripTextBox4;
-            this.bindingNavigatorElect1.Size = new System.Drawing.Size(792, 27);
+            this.bindingNavigatorElect1.Size = new System.Drawing.Size(790, 27);
             this.bindingNavigatorElect1.TabIndex = 30;
             this.bindingNavigatorElect1.Text = "bindingNavigator1";
             // 
@@ -1126,9 +1126,9 @@
             this.groupBox9.Controls.Add(this.btn2ndElection);
             this.groupBox9.Controls.Add(this.btnElect1);
             this.groupBox9.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox9.Location = new System.Drawing.Point(0, 266);
+            this.groupBox9.Location = new System.Drawing.Point(0, 264);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(792, 130);
+            this.groupBox9.Size = new System.Drawing.Size(790, 130);
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "OCR Lines";
@@ -1171,7 +1171,7 @@
             this.groupBox10.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox10.Location = new System.Drawing.Point(0, 0);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(792, 70);
+            this.groupBox10.Size = new System.Drawing.Size(790, 70);
             this.groupBox10.TabIndex = 27;
             this.groupBox10.TabStop = false;
             // 
@@ -1179,7 +1179,7 @@
             // 
             this.pictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(715, 21);
+            this.pictureBox5.Location = new System.Drawing.Point(713, 21);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(67, 39);
             this.pictureBox5.TabIndex = 1;
@@ -1203,7 +1203,7 @@
             this.tabResult.Location = new System.Drawing.Point(4, 25);
             this.tabResult.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabResult.Name = "tabResult";
-            this.tabResult.Size = new System.Drawing.Size(792, 396);
+            this.tabResult.Size = new System.Drawing.Size(790, 394);
             this.tabResult.TabIndex = 6;
             this.tabResult.Text = "Receipt";
             this.tabResult.UseVisualStyleBackColor = true;
@@ -1234,8 +1234,100 @@
             this.dgReceipts.Name = "dgReceipts";
             this.dgReceipts.ReadOnly = true;
             this.dgReceipts.RowTemplate.Height = 24;
-            this.dgReceipts.Size = new System.Drawing.Size(792, 169);
+            this.dgReceipts.Size = new System.Drawing.Size(790, 167);
             this.dgReceipts.TabIndex = 32;
+            // 
+            // dateDataGridViewTextBoxColumn
+            // 
+            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
+            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
+            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
+            this.dateDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dateDataGridViewTextBoxColumn.Width = 67;
+            // 
+            // comapanyNameDataGridViewTextBoxColumn
+            // 
+            this.comapanyNameDataGridViewTextBoxColumn.DataPropertyName = "Comapany_Name";
+            this.comapanyNameDataGridViewTextBoxColumn.HeaderText = "Comapany_Name";
+            this.comapanyNameDataGridViewTextBoxColumn.Name = "comapanyNameDataGridViewTextBoxColumn";
+            this.comapanyNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.comapanyNameDataGridViewTextBoxColumn.Width = 149;
+            // 
+            // taxIdentificationDataGridViewTextBoxColumn
+            // 
+            this.taxIdentificationDataGridViewTextBoxColumn.DataPropertyName = "Tax_Identification";
+            this.taxIdentificationDataGridViewTextBoxColumn.HeaderText = "Tax_Identification";
+            this.taxIdentificationDataGridViewTextBoxColumn.Name = "taxIdentificationDataGridViewTextBoxColumn";
+            this.taxIdentificationDataGridViewTextBoxColumn.ReadOnly = true;
+            this.taxIdentificationDataGridViewTextBoxColumn.Width = 147;
+            // 
+            // addressDataGridViewTextBoxColumn
+            // 
+            this.addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
+            this.addressDataGridViewTextBoxColumn.HeaderText = "Address";
+            this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
+            this.addressDataGridViewTextBoxColumn.ReadOnly = true;
+            this.addressDataGridViewTextBoxColumn.Width = 89;
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.descriptionDataGridViewTextBoxColumn.Width = 108;
+            // 
+            // receiptAttachedDataGridViewTextBoxColumn
+            // 
+            this.receiptAttachedDataGridViewTextBoxColumn.DataPropertyName = "Receipt_Attached";
+            this.receiptAttachedDataGridViewTextBoxColumn.HeaderText = "Receipt_Attached";
+            this.receiptAttachedDataGridViewTextBoxColumn.Name = "receiptAttachedDataGridViewTextBoxColumn";
+            this.receiptAttachedDataGridViewTextBoxColumn.ReadOnly = true;
+            this.receiptAttachedDataGridViewTextBoxColumn.Width = 149;
+            // 
+            // receiptNameDataGridViewTextBoxColumn
+            // 
+            this.receiptNameDataGridViewTextBoxColumn.DataPropertyName = "Receipt_Name";
+            this.receiptNameDataGridViewTextBoxColumn.HeaderText = "Receipt_Name";
+            this.receiptNameDataGridViewTextBoxColumn.Name = "receiptNameDataGridViewTextBoxColumn";
+            this.receiptNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.receiptNameDataGridViewTextBoxColumn.Width = 130;
+            // 
+            // businessReasonDataGridViewTextBoxColumn
+            // 
+            this.businessReasonDataGridViewTextBoxColumn.DataPropertyName = "BusinessReason";
+            this.businessReasonDataGridViewTextBoxColumn.HeaderText = "BusinessReason";
+            this.businessReasonDataGridViewTextBoxColumn.Name = "businessReasonDataGridViewTextBoxColumn";
+            this.businessReasonDataGridViewTextBoxColumn.ReadOnly = true;
+            this.businessReasonDataGridViewTextBoxColumn.Width = 143;
+            // 
+            // nameOfIndividualDataGridViewTextBoxColumn
+            // 
+            this.nameOfIndividualDataGridViewTextBoxColumn.DataPropertyName = "NameOfIndividual";
+            this.nameOfIndividualDataGridViewTextBoxColumn.HeaderText = "NameOfIndividual";
+            this.nameOfIndividualDataGridViewTextBoxColumn.Name = "nameOfIndividualDataGridViewTextBoxColumn";
+            this.nameOfIndividualDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameOfIndividualDataGridViewTextBoxColumn.Width = 148;
+            // 
+            // projectDataGridViewTextBoxColumn
+            // 
+            this.projectDataGridViewTextBoxColumn.DataPropertyName = "Project";
+            this.projectDataGridViewTextBoxColumn.HeaderText = "Project";
+            this.projectDataGridViewTextBoxColumn.Name = "projectDataGridViewTextBoxColumn";
+            this.projectDataGridViewTextBoxColumn.ReadOnly = true;
+            this.projectDataGridViewTextBoxColumn.Width = 81;
+            // 
+            // amountDataGridViewTextBoxColumn
+            // 
+            this.amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
+            this.amountDataGridViewTextBoxColumn.HeaderText = "Amount";
+            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
+            this.amountDataGridViewTextBoxColumn.ReadOnly = true;
+            this.amountDataGridViewTextBoxColumn.Width = 85;
+            // 
+            // receiptBindingSource
+            // 
+            this.receiptBindingSource.DataSource = typeof(BaiRocs.Models.Receipt);
             // 
             // bindingNavigatorReceipts
             // 
@@ -1256,14 +1348,14 @@
             this.toolStripSeparator19,
             this.toolStripButton23,
             this.toolStripSeparator20});
-            this.bindingNavigatorReceipts.Location = new System.Drawing.Point(0, 239);
+            this.bindingNavigatorReceipts.Location = new System.Drawing.Point(0, 237);
             this.bindingNavigatorReceipts.MoveFirstItem = this.toolStripButton9;
             this.bindingNavigatorReceipts.MoveLastItem = this.toolStripButton22;
             this.bindingNavigatorReceipts.MoveNextItem = this.toolStripButton21;
             this.bindingNavigatorReceipts.MovePreviousItem = this.toolStripButton20;
             this.bindingNavigatorReceipts.Name = "bindingNavigatorReceipts";
             this.bindingNavigatorReceipts.PositionItem = this.toolStripTextBox5;
-            this.bindingNavigatorReceipts.Size = new System.Drawing.Size(792, 27);
+            this.bindingNavigatorReceipts.Size = new System.Drawing.Size(790, 27);
             this.bindingNavigatorReceipts.TabIndex = 34;
             this.bindingNavigatorReceipts.Text = "bindingNavigator1";
             // 
@@ -1357,9 +1449,9 @@
             this.groupBox11.Controls.Add(this.btnDetails);
             this.groupBox11.Controls.Add(this.btnCreateReceipt);
             this.groupBox11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox11.Location = new System.Drawing.Point(0, 266);
+            this.groupBox11.Location = new System.Drawing.Point(0, 264);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(792, 130);
+            this.groupBox11.Size = new System.Drawing.Size(790, 130);
             this.groupBox11.TabIndex = 33;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Finalizing";
@@ -1435,7 +1527,7 @@
             this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox12.Location = new System.Drawing.Point(0, 0);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(792, 70);
+            this.groupBox12.Size = new System.Drawing.Size(790, 70);
             this.groupBox12.TabIndex = 31;
             this.groupBox12.TabStop = false;
             // 
@@ -1443,7 +1535,7 @@
             // 
             this.pictureBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(715, 21);
+            this.pictureBox6.Location = new System.Drawing.Point(713, 21);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(67, 39);
             this.pictureBox6.TabIndex = 1;
@@ -1467,7 +1559,7 @@
             this.tabPageCSV.Location = new System.Drawing.Point(4, 25);
             this.tabPageCSV.Name = "tabPageCSV";
             this.tabPageCSV.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCSV.Size = new System.Drawing.Size(792, 396);
+            this.tabPageCSV.Size = new System.Drawing.Size(790, 394);
             this.tabPageCSV.TabIndex = 8;
             this.tabPageCSV.Text = "CSV";
             this.tabPageCSV.UseVisualStyleBackColor = true;
@@ -1499,8 +1591,96 @@
             this.dgCSV.ReadOnly = true;
             this.dgCSV.RowHeadersVisible = false;
             this.dgCSV.RowTemplate.Height = 24;
-            this.dgCSV.Size = new System.Drawing.Size(786, 163);
+            this.dgCSV.Size = new System.Drawing.Size(784, 161);
             this.dgCSV.TabIndex = 36;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Date";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Date";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 67;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Comapany_Name";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Comapany_Name";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 149;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Tax_Identification";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Tax_Identification";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.dataGridViewTextBoxColumn3.Width = 147;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Address";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Address";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            this.dataGridViewTextBoxColumn4.Width = 89;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Description";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Description";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Width = 108;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Receipt_Attached";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Receipt_Attached";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Width = 149;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "Receipt_Name";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Receipt_Name";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Width = 130;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "BusinessReason";
+            this.dataGridViewTextBoxColumn8.HeaderText = "BusinessReason";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Width = 143;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "NameOfIndividual";
+            this.dataGridViewTextBoxColumn9.HeaderText = "NameOfIndividual";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 148;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Project";
+            this.dataGridViewTextBoxColumn10.HeaderText = "Project";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Width = 81;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "Amount";
+            this.dataGridViewTextBoxColumn11.HeaderText = "Amount";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            this.dataGridViewTextBoxColumn11.Width = 85;
             // 
             // bindingNavigatorCSV
             // 
@@ -1521,14 +1701,14 @@
             this.toolStripSeparator27,
             this.toolStripButton33,
             this.toolStripSeparator28});
-            this.bindingNavigatorCSV.Location = new System.Drawing.Point(3, 236);
+            this.bindingNavigatorCSV.Location = new System.Drawing.Point(3, 234);
             this.bindingNavigatorCSV.MoveFirstItem = this.toolStripButton29;
             this.bindingNavigatorCSV.MoveLastItem = this.toolStripButton32;
             this.bindingNavigatorCSV.MoveNextItem = this.toolStripButton31;
             this.bindingNavigatorCSV.MovePreviousItem = this.toolStripButton30;
             this.bindingNavigatorCSV.Name = "bindingNavigatorCSV";
             this.bindingNavigatorCSV.PositionItem = this.toolStripTextBox7;
-            this.bindingNavigatorCSV.Size = new System.Drawing.Size(786, 27);
+            this.bindingNavigatorCSV.Size = new System.Drawing.Size(784, 27);
             this.bindingNavigatorCSV.TabIndex = 38;
             this.bindingNavigatorCSV.Text = "bindingNavigator1";
             // 
@@ -1619,9 +1799,9 @@
             this.groupBox15.Controls.Add(this.btnClearDb);
             this.groupBox15.Controls.Add(this.btnExcel);
             this.groupBox15.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox15.Location = new System.Drawing.Point(3, 263);
+            this.groupBox15.Location = new System.Drawing.Point(3, 261);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(786, 130);
+            this.groupBox15.Size = new System.Drawing.Size(784, 130);
             this.groupBox15.TabIndex = 37;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Finalizing";
@@ -1640,7 +1820,7 @@
             // 
             this.btnClearDb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClearDb.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearDb.Location = new System.Drawing.Point(648, 51);
+            this.btnClearDb.Location = new System.Drawing.Point(646, 51);
             this.btnClearDb.Name = "btnClearDb";
             this.btnClearDb.Size = new System.Drawing.Size(128, 29);
             this.btnClearDb.TabIndex = 30;
@@ -1665,7 +1845,7 @@
             this.groupBox16.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox16.Location = new System.Drawing.Point(3, 3);
             this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(786, 70);
+            this.groupBox16.Size = new System.Drawing.Size(784, 70);
             this.groupBox16.TabIndex = 35;
             this.groupBox16.TabStop = false;
             // 
@@ -1673,7 +1853,7 @@
             // 
             this.pictureBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(709, 21);
+            this.pictureBox8.Location = new System.Drawing.Point(707, 21);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(67, 39);
             this.pictureBox8.TabIndex = 1;
@@ -1692,7 +1872,7 @@
             // 
             this.tabConfig.Location = new System.Drawing.Point(4, 25);
             this.tabConfig.Name = "tabConfig";
-            this.tabConfig.Size = new System.Drawing.Size(792, 396);
+            this.tabConfig.Size = new System.Drawing.Size(790, 394);
             this.tabConfig.TabIndex = 2;
             this.tabConfig.Text = "Global Config";
             this.tabConfig.UseVisualStyleBackColor = true;
@@ -1706,7 +1886,7 @@
             this.tabWeight.Location = new System.Drawing.Point(4, 25);
             this.tabWeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabWeight.Name = "tabWeight";
-            this.tabWeight.Size = new System.Drawing.Size(792, 396);
+            this.tabWeight.Size = new System.Drawing.Size(790, 394);
             this.tabWeight.TabIndex = 3;
             this.tabWeight.Text = "Weight";
             this.tabWeight.UseVisualStyleBackColor = true;
@@ -1720,7 +1900,7 @@
             this.dgWeight.Name = "dgWeight";
             this.dgWeight.ReadOnly = true;
             this.dgWeight.RowTemplate.Height = 24;
-            this.dgWeight.Size = new System.Drawing.Size(792, 169);
+            this.dgWeight.Size = new System.Drawing.Size(790, 167);
             this.dgWeight.TabIndex = 21;
             // 
             // bindingNavigatorWeight
@@ -1743,14 +1923,14 @@
             this.toolStripSeparator7,
             this.toolStripSeparator8,
             this.toolStripButtonDelete});
-            this.bindingNavigatorWeight.Location = new System.Drawing.Point(0, 239);
+            this.bindingNavigatorWeight.Location = new System.Drawing.Point(0, 237);
             this.bindingNavigatorWeight.MoveFirstItem = this.toolStripButton1;
             this.bindingNavigatorWeight.MoveLastItem = this.toolStripButton8;
             this.bindingNavigatorWeight.MoveNextItem = this.toolStripButton7;
             this.bindingNavigatorWeight.MovePreviousItem = this.toolStripButton6;
             this.bindingNavigatorWeight.Name = "bindingNavigatorWeight";
             this.bindingNavigatorWeight.PositionItem = this.toolStripTextBox2;
-            this.bindingNavigatorWeight.Size = new System.Drawing.Size(792, 27);
+            this.bindingNavigatorWeight.Size = new System.Drawing.Size(790, 27);
             this.bindingNavigatorWeight.TabIndex = 24;
             this.bindingNavigatorWeight.Text = "bindingNavigator1";
             // 
@@ -1849,9 +2029,9 @@
             this.groupBox6.Controls.Add(this.label5);
             this.groupBox6.Controls.Add(this.btnAddWeight);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox6.Location = new System.Drawing.Point(0, 266);
+            this.groupBox6.Location = new System.Drawing.Point(0, 264);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(792, 130);
+            this.groupBox6.Size = new System.Drawing.Size(790, 130);
             this.groupBox6.TabIndex = 23;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = " Weight Factor";
@@ -1934,7 +2114,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(792, 70);
+            this.groupBox5.Size = new System.Drawing.Size(790, 70);
             this.groupBox5.TabIndex = 22;
             this.groupBox5.TabStop = false;
             // 
@@ -1952,7 +2132,7 @@
             // 
             this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(715, 21);
+            this.pictureBox3.Location = new System.Drawing.Point(713, 21);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(67, 39);
             this.pictureBox3.TabIndex = 1;
@@ -1976,7 +2156,7 @@
             this.tabPageDetail.Location = new System.Drawing.Point(4, 25);
             this.tabPageDetail.Name = "tabPageDetail";
             this.tabPageDetail.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDetail.Size = new System.Drawing.Size(792, 396);
+            this.tabPageDetail.Size = new System.Drawing.Size(790, 394);
             this.tabPageDetail.TabIndex = 7;
             this.tabPageDetail.Text = "Weights for Detail ";
             this.tabPageDetail.UseVisualStyleBackColor = true;
@@ -1990,7 +2170,7 @@
             this.dgDetail.Name = "dgDetail";
             this.dgDetail.ReadOnly = true;
             this.dgDetail.RowTemplate.Height = 24;
-            this.dgDetail.Size = new System.Drawing.Size(786, 163);
+            this.dgDetail.Size = new System.Drawing.Size(784, 161);
             this.dgDetail.TabIndex = 25;
             // 
             // bindingNavigatorDetail
@@ -2013,14 +2193,14 @@
             this.toolStripSeparator23,
             this.toolStripSeparator24,
             this.toolStripButton28});
-            this.bindingNavigatorDetail.Location = new System.Drawing.Point(3, 236);
+            this.bindingNavigatorDetail.Location = new System.Drawing.Point(3, 234);
             this.bindingNavigatorDetail.MoveFirstItem = this.toolStripButton24;
             this.bindingNavigatorDetail.MoveLastItem = this.toolStripButton27;
             this.bindingNavigatorDetail.MoveNextItem = this.toolStripButton26;
             this.bindingNavigatorDetail.MovePreviousItem = this.toolStripButton25;
             this.bindingNavigatorDetail.Name = "bindingNavigatorDetail";
             this.bindingNavigatorDetail.PositionItem = this.toolStripTextBox6;
-            this.bindingNavigatorDetail.Size = new System.Drawing.Size(786, 27);
+            this.bindingNavigatorDetail.Size = new System.Drawing.Size(784, 27);
             this.bindingNavigatorDetail.TabIndex = 28;
             this.bindingNavigatorDetail.Text = "bindingNavigator1";
             // 
@@ -2118,9 +2298,9 @@
             this.groupBox13.Controls.Add(this.label9);
             this.groupBox13.Controls.Add(this.btnWeightDetail);
             this.groupBox13.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox13.Location = new System.Drawing.Point(3, 263);
+            this.groupBox13.Location = new System.Drawing.Point(3, 261);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(786, 130);
+            this.groupBox13.Size = new System.Drawing.Size(784, 130);
             this.groupBox13.TabIndex = 27;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = " Weight Factor";
@@ -2204,7 +2384,7 @@
             this.groupBox14.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox14.Location = new System.Drawing.Point(3, 3);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(786, 70);
+            this.groupBox14.Size = new System.Drawing.Size(784, 70);
             this.groupBox14.TabIndex = 26;
             this.groupBox14.TabStop = false;
             // 
@@ -2222,7 +2402,7 @@
             // 
             this.pictureBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(709, 21);
+            this.pictureBox7.Location = new System.Drawing.Point(707, 21);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(67, 39);
             this.pictureBox7.TabIndex = 1;
@@ -2237,191 +2417,11 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "Dimension for Detail:";
             // 
-            // dateDataGridViewTextBoxColumn
-            // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
-            this.dateDataGridViewTextBoxColumn.HeaderText = "Date";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
-            this.dateDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dateDataGridViewTextBoxColumn.Width = 67;
-            // 
-            // comapanyNameDataGridViewTextBoxColumn
-            // 
-            this.comapanyNameDataGridViewTextBoxColumn.DataPropertyName = "Comapany_Name";
-            this.comapanyNameDataGridViewTextBoxColumn.HeaderText = "Comapany_Name";
-            this.comapanyNameDataGridViewTextBoxColumn.Name = "comapanyNameDataGridViewTextBoxColumn";
-            this.comapanyNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.comapanyNameDataGridViewTextBoxColumn.Width = 149;
-            // 
-            // taxIdentificationDataGridViewTextBoxColumn
-            // 
-            this.taxIdentificationDataGridViewTextBoxColumn.DataPropertyName = "Tax_Identification";
-            this.taxIdentificationDataGridViewTextBoxColumn.HeaderText = "Tax_Identification";
-            this.taxIdentificationDataGridViewTextBoxColumn.Name = "taxIdentificationDataGridViewTextBoxColumn";
-            this.taxIdentificationDataGridViewTextBoxColumn.ReadOnly = true;
-            this.taxIdentificationDataGridViewTextBoxColumn.Width = 147;
-            // 
-            // addressDataGridViewTextBoxColumn
-            // 
-            this.addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
-            this.addressDataGridViewTextBoxColumn.HeaderText = "Address";
-            this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
-            this.addressDataGridViewTextBoxColumn.ReadOnly = true;
-            this.addressDataGridViewTextBoxColumn.Width = 89;
-            // 
-            // descriptionDataGridViewTextBoxColumn
-            // 
-            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
-            this.descriptionDataGridViewTextBoxColumn.Width = 108;
-            // 
-            // receiptAttachedDataGridViewTextBoxColumn
-            // 
-            this.receiptAttachedDataGridViewTextBoxColumn.DataPropertyName = "Receipt_Attached";
-            this.receiptAttachedDataGridViewTextBoxColumn.HeaderText = "Receipt_Attached";
-            this.receiptAttachedDataGridViewTextBoxColumn.Name = "receiptAttachedDataGridViewTextBoxColumn";
-            this.receiptAttachedDataGridViewTextBoxColumn.ReadOnly = true;
-            this.receiptAttachedDataGridViewTextBoxColumn.Width = 149;
-            // 
-            // receiptNameDataGridViewTextBoxColumn
-            // 
-            this.receiptNameDataGridViewTextBoxColumn.DataPropertyName = "Receipt_Name";
-            this.receiptNameDataGridViewTextBoxColumn.HeaderText = "Receipt_Name";
-            this.receiptNameDataGridViewTextBoxColumn.Name = "receiptNameDataGridViewTextBoxColumn";
-            this.receiptNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.receiptNameDataGridViewTextBoxColumn.Width = 130;
-            // 
-            // businessReasonDataGridViewTextBoxColumn
-            // 
-            this.businessReasonDataGridViewTextBoxColumn.DataPropertyName = "BusinessReason";
-            this.businessReasonDataGridViewTextBoxColumn.HeaderText = "BusinessReason";
-            this.businessReasonDataGridViewTextBoxColumn.Name = "businessReasonDataGridViewTextBoxColumn";
-            this.businessReasonDataGridViewTextBoxColumn.ReadOnly = true;
-            this.businessReasonDataGridViewTextBoxColumn.Width = 143;
-            // 
-            // nameOfIndividualDataGridViewTextBoxColumn
-            // 
-            this.nameOfIndividualDataGridViewTextBoxColumn.DataPropertyName = "NameOfIndividual";
-            this.nameOfIndividualDataGridViewTextBoxColumn.HeaderText = "NameOfIndividual";
-            this.nameOfIndividualDataGridViewTextBoxColumn.Name = "nameOfIndividualDataGridViewTextBoxColumn";
-            this.nameOfIndividualDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameOfIndividualDataGridViewTextBoxColumn.Width = 148;
-            // 
-            // projectDataGridViewTextBoxColumn
-            // 
-            this.projectDataGridViewTextBoxColumn.DataPropertyName = "Project";
-            this.projectDataGridViewTextBoxColumn.HeaderText = "Project";
-            this.projectDataGridViewTextBoxColumn.Name = "projectDataGridViewTextBoxColumn";
-            this.projectDataGridViewTextBoxColumn.ReadOnly = true;
-            this.projectDataGridViewTextBoxColumn.Width = 81;
-            // 
-            // amountDataGridViewTextBoxColumn
-            // 
-            this.amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
-            this.amountDataGridViewTextBoxColumn.HeaderText = "Amount";
-            this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            this.amountDataGridViewTextBoxColumn.ReadOnly = true;
-            this.amountDataGridViewTextBoxColumn.Width = 85;
-            // 
-            // receiptBindingSource
-            // 
-            this.receiptBindingSource.DataSource = typeof(BaiRocs.Models.Receipt);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Date";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Date";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 67;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Comapany_Name";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Comapany_Name";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 149;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Tax_Identification";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Tax_Identification";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 147;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Address";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Address";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Width = 89;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Description";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Description";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
-            this.dataGridViewTextBoxColumn5.Width = 108;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "Receipt_Attached";
-            this.dataGridViewTextBoxColumn6.HeaderText = "Receipt_Attached";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 149;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "Receipt_Name";
-            this.dataGridViewTextBoxColumn7.HeaderText = "Receipt_Name";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            this.dataGridViewTextBoxColumn7.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.DataPropertyName = "BusinessReason";
-            this.dataGridViewTextBoxColumn8.HeaderText = "BusinessReason";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            this.dataGridViewTextBoxColumn8.Width = 143;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.DataPropertyName = "NameOfIndividual";
-            this.dataGridViewTextBoxColumn9.HeaderText = "NameOfIndividual";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.ReadOnly = true;
-            this.dataGridViewTextBoxColumn9.Width = 148;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.DataPropertyName = "Project";
-            this.dataGridViewTextBoxColumn10.HeaderText = "Project";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.ReadOnly = true;
-            this.dataGridViewTextBoxColumn10.Width = 81;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            this.dataGridViewTextBoxColumn11.DataPropertyName = "Amount";
-            this.dataGridViewTextBoxColumn11.HeaderText = "Amount";
-            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            this.dataGridViewTextBoxColumn11.ReadOnly = true;
-            this.dataGridViewTextBoxColumn11.Width = 85;
-            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(798, 448);
             this.Controls.Add(this.tabAll);
             this.Controls.Add(this.statusStrip);
             this.Name = "MainFrm";
@@ -2472,6 +2472,7 @@
             this.tabResult.ResumeLayout(false);
             this.tabResult.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgReceipts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorReceipts)).EndInit();
             this.bindingNavigatorReceipts.ResumeLayout(false);
             this.bindingNavigatorReceipts.PerformLayout();
@@ -2516,7 +2517,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceSigma)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceElect1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCSV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.receiptBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

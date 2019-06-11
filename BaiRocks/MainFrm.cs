@@ -263,18 +263,29 @@ namespace BaiRocs
          
             if (iniRecord<=0)
             {
+                var stat = BaiRocService.GetEngineStat();
                 if (imageFiles.Count > 0)
                 {
-                    var stat = BaiRocService.GetEngineStat();
                     stat.Status = "Scanning";
-                    stat.LastBatchCount = stat.MaxValue;
+
+                    if(stat.MaxValue>0)
+                     stat.LastBatchCount = stat.MaxValue;
+
                     stat.MaxValue = imageFiles.Count;
                     stat.Value = 1;
                     stat.LastStart = DateTime.Now;
 
                     var imageFolder = Path.GetFileNameWithoutExtension(Global.CurrentImageFolder);
-                    stat.CurrentFolder = Global.CurrentUser + "/" + imageFolder; 
-                    
+                    stat.CurrentFolder = Global.CurrentUser + "/" + imageFolder;                     
+                    BaiRocService.UpdateEngine(stat);
+                }
+                if (stat.Value >= stat.MaxValue)
+                {
+                    stat.Status = "Idle";
+                    //stat.LastBatchCount = stat.MaxValue;
+                    //stat.TotalConvert += stat.MaxValue;
+                    //stat.MaxValue = 0;
+                    //stat.Value = 0;
                     BaiRocService.UpdateEngine(stat);
                 }
             }
@@ -283,13 +294,8 @@ namespace BaiRocs
                 var stat = BaiRocService.GetEngineStat();
                 stat.Value += 1;
                 BaiRocService.UpdateEngine(stat);
-            }
-
-
+            }           
             SetStatus(ProcessStatus.Ready);
-
-
-
         }
 
         private void btnChekFile_Click(object sender, EventArgs e)
@@ -577,6 +583,7 @@ namespace BaiRocs
                 using (MyDBContext db = new MyDBContext())
                 {
                     var f = (WeightFactor)bindingSourceWeight.Current;
+                    db.Entry(f).State = System.Data.Entity.EntityState.Deleted;
                     db.WeightFactors.Remove(f);
                     db.SaveChanges();
                 }
@@ -787,7 +794,7 @@ namespace BaiRocs
             {
                 if (ocr.ElectedAs == ReceiptParts.DateTitle.ToString())
                 {
-                    RocsTextService.GetReceiptDateValue(ocr);
+                    RocsTextService.GetReceiptDateValue(ocr.LineNo);
                 }
                 else if (ocr.ElectedAs == ReceiptParts.VendorTINTitle.ToString())
                 {
@@ -798,8 +805,27 @@ namespace BaiRocs
                     RocsTextService.GetReceiptTotalValue(ocr);
                 }
 
+            }
+
+            //last call
+            var year = DateTime.Now.Date.Year;
+            string strYear = year.ToString();
+            //var y2 ="/" + strYear.Substring(2, 2);
+            var y19 =strYear.Substring(2, 2);
+
+            if (string.IsNullOrEmpty(Global.CurrentReciept.Date) || !Global.CurrentReciept.Date.Contains(y19))
+            //|| !Global.CurrentReciept.Date.Contains(strYear) || !Global.CurrentReciept.Date.Contains(y2))
+            {
+                RocsTextService.GetDateByYear();
+            }
 
 
+            //TOTAL amount
+            if (string.IsNullOrEmpty(Global.CurrentReciept.Amount)
+                || Convert.ToDouble(RocsTextService.RefineToMoney(Global.CurrentReciept.Amount))>3000)
+            //|| !Global.CurrentReciept.Date.Contains(strYear) || !Global.CurrentReciept.Date.Contains(y2))
+            {
+               RocsTextService.GetAmountByDifference();
             }
 
             table.Add(Global.CurrentReciept);
@@ -868,6 +894,13 @@ namespace BaiRocs
 
 
         }
+
+#region EXTENDED ELECTION
+
+
+
+
+#endregion
 
         private void cbDetailFactor_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1121,23 +1154,35 @@ namespace BaiRocs
                     break;
 
                 //keep running..
-                shutdown = 4;
+                shutdown = 4;            
+                try
+                {
+                    btnWeight_Click(sender, e);
+                    btnSigma_Click(sender, e);
+                    btnElect1_Click(sender, e);
+                    btn2ndElection_Click(sender, e);
+                    btn3rdElection_Click(sender, e);
+                    btnCreateReceipt_Click(sender, e);
+                    btnDetails_Click(sender, e);
+                }
+                catch (Exception)
+                {
 
-                btnWeight_Click(sender, e);
-                btnSigma_Click(sender, e);
-                btnElect1_Click(sender, e);
-                btn2ndElection_Click(sender, e);
-                btn3rdElection_Click(sender, e);
-                btnCreateReceipt_Click(sender, e);
-                btnDetails_Click(sender, e);
+                    RecoverFromError1(sender, e);
+                }
 
-                btnAuthenticatedSet_Click(sender, e);
-                btnUserSet_Click(sender, e);
-
-                btnSave_Click(sender, e);
-                btnExcel_Click(sender, e);               
-                
-
+                try
+                {
+                   
+                    btnAuthenticatedSet_Click(sender, e);
+                    btnUserSet_Click(sender, e);
+                    btnSave_Click(sender, e);
+                    btnExcel_Click(sender, e);
+                }
+                catch (Exception)
+                {
+                    RecoverFromError3(sender, e);
+                }
 
                 Application.DoEvents();
             }
@@ -1145,6 +1190,125 @@ namespace BaiRocs
                 btnAutoRun_Click(sender, e);
 
         }
+
+        public void RecoverFromError1(object sender, EventArgs e)
+        {
+            //wait a minute 
+            var limit = DateTime.Now.AddSeconds(5);
+            while (DateTime.Now < limit)
+            {
+                ConsoleSpinner.Instance.Update();
+                //AsciiArt.Draw();
+                Task.Delay(100);
+                Application.DoEvents();
+            }
+
+            try
+            {
+                btnWeight_Click(sender, e);
+                btnSigma_Click(sender, e);
+                btnElect1_Click(sender, e);
+                btn2ndElection_Click(sender, e);
+                btn3rdElection_Click(sender, e);
+                btnCreateReceipt_Click(sender, e);
+                btnDetails_Click(sender, e);
+                btnAuthenticatedSet_Click(sender, e);
+                btnUserSet_Click(sender, e);
+                btnSave_Click(sender, e);
+                btnExcel_Click(sender, e);
+            }
+            catch (Exception)
+            {
+                RecoverFromError2(sender, e);
+            }
+           
+
+        }
+        public void RecoverFromError2(object sender, EventArgs e)
+        {
+            //wait a minute 
+            var limit = DateTime.Now.AddSeconds(10);
+            while (DateTime.Now < limit)
+            {
+                ConsoleSpinner.Instance.Update();
+                //AsciiArt.Draw();
+                Task.Delay(100);
+                Application.DoEvents();
+            }
+            try
+            {
+                btnWeight_Click(sender, e);
+                btnSigma_Click(sender, e);
+                btnElect1_Click(sender, e);
+                btn2ndElection_Click(sender, e);
+                btn3rdElection_Click(sender, e);
+                btnCreateReceipt_Click(sender, e);
+                btnDetails_Click(sender, e);
+                btnAuthenticatedSet_Click(sender, e);
+                btnUserSet_Click(sender, e);
+                btnSave_Click(sender, e);
+                btnExcel_Click(sender, e);
+            }
+            catch (Exception err)
+            {
+                Global.LogError(err);
+            }
+
+
+        }
+
+        public void RecoverFromError3(object sender, EventArgs e)
+        {
+            //wait a minute 
+            var limit = DateTime.Now.AddSeconds(5);
+            while (DateTime.Now < limit)
+            {
+                ConsoleSpinner.Instance.Update();
+                //AsciiArt.Draw();
+                Task.Delay(100);
+                Application.DoEvents();
+            }
+
+            try
+            {
+               
+                btnAuthenticatedSet_Click(sender, e);
+                btnUserSet_Click(sender, e);
+                btnSave_Click(sender, e);
+                btnExcel_Click(sender, e);
+            }
+            catch (Exception)
+            {
+                RecoverFromError4(sender, e);
+            }
+        }
+        public void RecoverFromError4(object sender, EventArgs e)
+        {
+            //wait a minute 
+            var limit = DateTime.Now.AddSeconds(10);
+            while (DateTime.Now < limit)
+            {
+                ConsoleSpinner.Instance.Update();
+                //AsciiArt.Draw();
+                Task.Delay(100);
+                Application.DoEvents();
+            }
+            try
+            {
+               
+                btnAuthenticatedSet_Click(sender, e);
+                btnUserSet_Click(sender, e);
+                btnSave_Click(sender, e);
+                btnExcel_Click(sender, e);
+            }
+            catch (Exception err)
+            {
+                Global.LogError(err);
+            }
+
+
+        }
+
 
         void WaitForReady()
         {
