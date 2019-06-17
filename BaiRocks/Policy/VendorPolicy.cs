@@ -88,9 +88,14 @@ namespace BaiRocs.Policy
                     if (ocrLine.Content.ToLower().Contains(f.keyWord.ToLower()))
                     {
                         ocrLine.WeightedAsDateTitle += f.Weight;
-                    }
+                    }                 
 
                 }
+
+                //as observed of SI  entry
+                if((!string.IsNullOrEmpty(ocrLine.Content) 
+                    && ocrLine.Content.Trim() == "SI"))
+                    ocrLine.WeightedAsDateTitle += 3;
 
             }          
 
